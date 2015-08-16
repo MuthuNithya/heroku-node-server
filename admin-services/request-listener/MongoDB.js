@@ -10,6 +10,18 @@
         if (!err) {
             console.log("We are connected");
         }
-        db.close();
-    });
+        var collection = db.collection("batch_document_insert_collection_safe");
+        // Insert a single document
+        collection.insert([{Name: 'Nithya'}
+            , {Password: 'Muthu123'}], function (err, result) {
+            assert.equal(null, err);
+
+            // Fetch the document
+            collection.findOne({Name: 'Nithya'}, function (err, item) {
+                assert.equal(null, err);
+                assert.equal('Nithya', item.Name);
+                db.close();
+            });
+        })
+    })
 })();
