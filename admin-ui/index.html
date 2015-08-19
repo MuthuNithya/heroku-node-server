@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app" ng-controller="WorkManagementController">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>Work Management</title>
     <link rel="stylesheet" href="app/styles/app.css"/>
 </head>
 <body>
-<div ng-view=""></div>
+<div ui-view></div>
 <script src="assets/lib/jquery-2.1.4.js"></script>
 <script src="assets/lib/angular.js"></script>
-<script src="assets/lib/angular-route.js"></script>
+<script src="assets/lib/ui-router.js"></script>
 <script src="app/configuration/app.js"></script>
+<script src="app/configuration/app-route.js"></script>
 <script src="app/common/WorkManagementController.js"></script>
 <script src="app/common/WorkManagementService.js"></script>
 <script src="app/common/WorkManagementDirective.js"></script>
