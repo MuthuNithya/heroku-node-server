@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Work Management</title>
-    <link rel="stylesheet" href="app/styles/foundation.css"/>
+    <link rel="stylesheet" href="app/bower_components/foundation/css/normalize.css"/>
+    <link rel="stylesheet" href="app/bower_components/foundation/css/foundation.css"/>
     <link rel="stylesheet" href="app/styles/app.css"/>
 </head>
 <body>
@@ -12,10 +13,15 @@
 <script src="assets/lib/jquery-2.1.4.js"></script>
 <script src="assets/lib/angular.js"></script>
 <script src="assets/lib/ui-router.js"></script>
+<script src="app/bower_components/foundation/js/vendor/modernizr.js"></script>
+<script src="app/bower_components/foundation/js/foundation.js"></script>
 <script src="app/configuration/app.js"></script>
 <script src="app/configuration/app-route.js"></script>
 <script src="app/common/WorkManagementController.js"></script>
 <script src="app/common/WorkManagementService.js"></script>
 <script src="app/common/WorkManagementDirective.js"></script>
+<script>
+    $(document).foundation();
+</script>
 </body>
 </html>
