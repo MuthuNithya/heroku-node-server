@@ -1,2 +1,19 @@
 @import "../common/layout/layout";
 @import "../login/login";
+
+body{
+  .clear{
+    clear: both;
+  }
+  a:hover,a:focus{
+    color:#0000EE;
+    text-decoration: underline;
+  }
+  .fl-lt{
+    float:left;
+  }
+  .fl-rt{
+    float:right;
+  }
+
+}
