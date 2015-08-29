@@ -3,5 +3,9 @@ $font-size : 12px;
 body {
   .divLoginModule {
     font-size: $font-size;
+    .signin-module{
+      float:left;
+
+    }
   }
 }

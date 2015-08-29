@@ -12,7 +12,7 @@
             .state('home',{
                 url:'/',
                 templateUrl:'app/login/login.html',
-                controller:'workManagementController'
+                controller:'WorkManagementController'
             })
             .state('dashboard',{
                 url:'/dashboard',
