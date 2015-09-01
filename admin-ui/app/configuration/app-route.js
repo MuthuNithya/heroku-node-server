@@ -11,8 +11,7 @@
         $stateProvider
             .state('home',{
                 url:'/',
-                templateUrl:'app/login/login.html',
-                controller:'WorkManagementController'
+                templateUrl:'app/login/login.html'
             })
             .state('dashboard',{
                 url:'/dashboard',

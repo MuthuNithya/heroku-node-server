@@ -1,12 +1,19 @@
 $headerfont: 'Roboto Slab', serif;
 .header-module{
-  margin: 10px 20px;
   .header-title{
     font-family:$headerfont;
+    color:white;
   }
   .header-logo{
     font-family: FontAwesome;
     margin-right:15px;
+  }
+  .type-demo{
+    background-color:rgba(0,0,0,0.8);
+    padding: 1px 20px;
+  }
+  ul.inline-list{
+    margin: 10px 10px 10px 0;
   }
 }
 

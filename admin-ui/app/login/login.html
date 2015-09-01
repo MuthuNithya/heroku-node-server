@@ -4,7 +4,11 @@
         <form name="formSignIn" action="" novalidate>
             <div class="emailid-sec">
                 <label for="txtEmailId" class="ada-hidden">Email ID</label>
-                <input type="email" name="txtEmailId" id="txtEmailId" placeholder="Email ID" required="true"/>
+                <input type="email" name="txtEmailId" id="txtEmailId" ng-model="txtEmailId" placeholder="Email ID" required="true"/>
+                <span class="errorfield" ng-if="formSignIn.txtEmailId.$dirty && formSignIn.txtEmailId.$invalid">
+                    <span ng-show="formSignIn.txtEmailId.$error.required">Email ID is required</span>
+                    <span ng-show="formSignIn.txtEmailId.$error.email">Enter a valid Email ID</span>
+                </span>
             </div>
             <div class="password-sec">
                 <label for="txtPassWord" class="ada-hidden">Password</label>
