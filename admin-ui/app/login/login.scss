@@ -5,7 +5,11 @@ body {
     font-size: $font-size;
     .signin-module{
       float:left;
-
+    }
+    .signup-module{
+      @media #{$medium-up} {
+        border-left: 1px solid #cccccc;
+      }
     }
     input{
       margin: 1rem 0 0 0;

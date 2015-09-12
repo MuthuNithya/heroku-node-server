@@ -11,7 +11,7 @@
 </head>
 <body ng-controller="WorkManagementController">
 <div ng-include="'app/common/layout/header.html'"></div>
-<div ui-view></div>
+<div ui-view class="main-content"></div>
 <div ng-include="'app/common/layout/footer.html'"></div>
 <script src="assets/lib/jquery-2.1.4.js"></script>
 <script src="assets/lib/angular.js"></script>
@@ -25,6 +25,7 @@
 <script src="app/common/WorkManagementService.js"></script>
 <script src="app/common/WorkManagementDirective.js"></script>
 <script src="app/login/loginController.js"></script>
+<script src="app/login/loginService.js"></script>
 <script>
     $(document).foundation();
 </script>
