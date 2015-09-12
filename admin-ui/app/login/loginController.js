@@ -4,13 +4,13 @@
     var loginCtrl=this;
         loginCtrl.currentUser={};
         loginCtrl.signInData={
-                            "userName":"",
-                            "passWord":""
+                            "emailId":"",
+                            "password":""
                             };
         loginCtrl.signUpData={
                             "userName":"",
-                            "emailID":"",
-                            "passWord":"",
+                            "emailId":"",
+                            "password":"",
                             "confirmPassword":""
         };
         loginCtrl.submitForm = function(formMode){

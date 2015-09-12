@@ -5,35 +5,39 @@
     module.exports = {
         authorizeLogin:validateUser
     };
-    function validateUser(mode, req){
+    function validateUser(mode, req, res){
+        var resData;
         MongoClient.connect("mongodb://MuthuNithya:862014@ds033143.mongolab.com:33143/dreamlion", function (err, db) {
             if (!err) {
                 console.log("We are connected");
             }
             var collection = db.collection("batch_document_insert_collection_safe");
             switch (mode){
-                case 'login':authorizeLogin(collection, req);
+                case 'login':
+                    resData = authorizeLogin(collection, req,res, db);
                     break;
-                case 'signup':createUser(collection, req);
+                case 'signup':
+                    resData = createUser(collection, req,res, db);
                     break;
             }
-            db.close();
         });
+        return;
     }
-    function authorizeLogin(collection, req){
+    function authorizeLogin(collection, req,res, db){
         var fetchUser = {};
-        collection.findOne({emailId: req.emailId}, function (err, item) {
-            assert.equal(null, err);
-            assert.equal(req.emailId, item.emailId);
-            assert.equal(req.password, item.password);
+        collection.findOne({emailId: req.emailId, Password: req.password}, function (err, item) {
             fetchUser = item;
+            res.send(fetchUser);
+            db.close();
+            return;
         });
-        return fetchUser;
     }
-    function createUser(collection, req){
+    function createUser(collection, req, db){
         // Insert a single document
         collection.insert([{emailId: req.emailId, Password: req.password, userName: req.username}], function (err, result) {
             assert.equal(null, err);
+            db.close();
+            return;
         })
     }
 })();

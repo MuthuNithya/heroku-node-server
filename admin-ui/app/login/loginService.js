@@ -7,7 +7,11 @@
             $http({
                 method:'POST',
                 url:'http://localhost:8081/auth_login',
-                data:loginDetails
+                data:loginDetails,
+                "Content-Type": "application/json",
+                headers:{
+                    'Access-Control-Allow-Origin': '*'
+                }
             }).success(function(data){
                 deferred.resolve(data);
             }).error(function(data){
