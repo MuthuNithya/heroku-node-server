@@ -1,5 +1,5 @@
 (function(){
-    angular.module('app',['ui.router']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+    angular.module('workmanagement',['ui.router']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
             $state.go('home');
@@ -11,7 +11,8 @@
         $stateProvider
             .state('home',{
                 url:'/',
-                templateUrl:'app/login/login.html'
+                templateUrl:'app/login/login.html',
+                controller:'WorkManagementController'
             })
             .state('dashboard',{
                 url:'/dashboard',

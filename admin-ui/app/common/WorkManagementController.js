@@ -3,7 +3,7 @@
  */
 (function(){
     "use strict";
-    angular.module('workmanagement.common',[]).controller('WorkManagementController',['$scope',function($scope){
+    angular.module('workmanagement',[]).controller('WorkManagementController',['$scope',function($scope){
         var wmc = this;
     }]);
 })();
