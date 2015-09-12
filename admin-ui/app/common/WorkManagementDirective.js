@@ -1,4 +1,4 @@
 (function () {
     "use strict";
-    var app = angular.module('workmanagement.common',[]);
+    var app = angular.module('workmanagement.common');
 })();
