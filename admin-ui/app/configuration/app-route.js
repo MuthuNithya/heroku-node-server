@@ -12,7 +12,8 @@
             .state('home',{
                 url:'/',
                 templateUrl:'app/login/login.html',
-                controller:'WorkManagementController'
+                controller:'loginController',
+                controllerAs:'loginCtrl'
             })
             .state('dashboard',{
                 url:'/dashboard',
