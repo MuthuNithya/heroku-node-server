@@ -1,7 +1,7 @@
 {
   "result": [
     {
-      "loginStatus": "success",
+      "status": "success",
       "userName":"Nithya"
     }
   ]
