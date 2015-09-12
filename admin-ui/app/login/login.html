@@ -1,50 +1,64 @@
 <div class="divLoginModule">
     <div class="signin-module large-5 columns">
         <h2>Sign In</h2>
-        <form name="formSignIn" action="" novalidate>
+        <ng-form name="loginCtrl.formSignIn" novalidate>
             <div class="emailid-sec">
                 <label for="txtEmailId" class="ada-hidden">Email ID</label>
-                <input type="email" name="txtEmailId" id="txtEmailId" ng-model="txtEmailId" placeholder="Email ID" required="true"/>
-                <span class="errorfield" ng-if="formSignIn.txtEmailId.$dirty && formSignIn.txtEmailId.$invalid">
-                    <span ng-show="formSignIn.txtEmailId.$error.required">Email ID is required</span>
-                    <span ng-show="formSignIn.txtEmailId.$error.email">Enter a valid Email ID</span>
+                <input type="email" name="txtEmailId" id="txtEmailId" ng-model="txtEmailId" placeholder="Email ID" ng-required="true"/>
+                <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignIn.$submitted && loginCtrl.formSignIn.txtEmailId.$invalid">
+                    <span ng-show="loginCtrl.formSignIn.txtEmailId.$error.required">Email ID is required</span>
+                    <span ng-show="loginCtrl.formSignIn.txtEmailId.$error.email">Enter a valid Email ID</span>
                 </span>
             </div>
             <div class="password-sec">
                 <label for="txtPassWord" class="ada-hidden">Password</label>
-                <input type="password" name="txtPassWord" id="txtPassWord" placeholder="Password" required="true"/>
+                <input type="password" name="txtPassWord" id="txtPassWord" ng-model="txtPassWord" placeholder="Password" ng-required="true"/>
+                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignIn.$submitted  && loginCtrl.formSignIn.txtPassWord.$invalid">
+                    <span ng-show="loginCtrl.formSignIn.txtPassWord.$error.required">Password is required</span>
+                </span>
             </div>
             <div class="signin-btn">
-                <a href="#"  class="button secondary">Sign In</a>
+                <button  class="button secondary" type="submit" ng-click="loginCtrl.submitForm('login')">Sign In</button>
             </div>
-        </form>
+        </ng-form>
     </div>
     <div class="signup-module large-7 columns">
         <h2>Sign Up</h2>
-        <form name="formSignUp" action="" novalidate>
+        <ng-form name="loginCtrl.formSignUp" novalidate>
             <div class="username-sec">
                 <label class="ada-hidden">UserName</label>
                 <input type="text" name="txtUName" ng-model="txtName" placeholder="UserName" ng-required="true"/>
-                 <span class="errorfield" ng-if="formSignUp.txtUName.$dirty && formSignUp.txtUName.$invalid">
-                     <span ng-show="formSignUp.txtUName.$error.required">Username is required.</span>
+                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted  && loginCtrl.formSignUp.txtUName.$invalid">
+                     <span ng-show="loginCtrl.formSignUp.txtUName.$error.required">Username is required.</span>
                  </span>
             </div>
             <div class="emailid-sec">
                 <label for="txtSignUpEmailId" class="ada-hidden">Email ID</label>
-                <input type="email" name="txtSignUpEmailId" id="txtSignUpEmailId" placeholder="Email ID" required="true"/>
+                <input type="email" name="txtSignUpEmailId" id="txtSignUpEmailId" ng-model="txtSignUpEmailId" placeholder="Email ID" ng-required="true"/>
+                <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpEmailId.$invalid">
+                    <span ng-show="loginCtrl.formSignUp.txtSignUpEmailId.$error.required">Email ID is required</span>
+                    <span ng-show="loginCtrl.formSignUp.txtSignUpEmailId.$error.email">Enter a valid Email ID</span>
+                </span>
             </div>
             <div class="password-sec">
                 <label for="txtSignUpPassWord" class="ada-hidden">Password</label>
-                <input type="password" name="txtSignUpPassWord" id="txtSignUpPassWord" placeholder="Password" required="true"/>
+                <input type="password" name="txtSignUpPassWord" id="txtSignUpPassWord" ng-model="txtSignUpPassWord" placeholder="Password" ng-required="true"/>
+                <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpPassWord.$invalid">
+                     <span ng-show="loginCtrl.formSignUp.txtSignUpPassWord.$error.required">Password is required.</span>
+                 </span>
             </div>
             <div class="conf-password-sec">
                 <label for="txtSignUpConfPassWord" class="ada-hidden">Confirm Password</label>
-                <input type="password" name="txtSignUpConfPassWord" id="txtSignUpConfPassWord" placeholder="Confirm Password" required="true"/>
+                <input type="password" name="txtSignUpConfPassWord" id="txtSignUpConfPassWord" ng-model="txtSignUpConfPassWord" placeholder="Confirm Password" ng-required="true" compare-to="txtSignUpPassWord"/>
+                <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpConfPassWord.$invalid">
+                     <span ng-show="loginCtrl.formSignUp.txtSignUpConfPassWord.$error.required">Confirm password is required.</span>
+                    <span ng-show="loginCtrl.formSignUp.txtSignUpConfPassWord.$error.compareTo">Confirm password should match</span>
+                 </span>
             </div>
             <div class="signup-btn">
-                <a href="#"  class="button primary">Sign Up</a>
+                <button  type="submit" class="button primary" ng-click="loginCtrl.submitForm('signup')">Sign Up</button>
             </div>
-        </form>
+        </ng-form>
     </div>
     <div class="clear"></div>
 </div>
