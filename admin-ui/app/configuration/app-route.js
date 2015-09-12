@@ -1,5 +1,5 @@
 (function(){
-    angular.module('workmanagement',['ui.router']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+    angular.module('workmanagement',['ui.router','workmanagement.login']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
             $state.go('home');

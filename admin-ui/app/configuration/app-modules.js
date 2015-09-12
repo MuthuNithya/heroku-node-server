@@ -1,6 +1,6 @@
-(
-    function(){
+(function(){
+        "use strict";
         angular.module('workmanagement.common', []);
-        angular.module('workmanagement.login', ['workmanagement']);
+        angular.module('workmanagement.login', []);
     }
 )();
