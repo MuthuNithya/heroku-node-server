@@ -1,0 +1,9 @@
+{
+  "result": [
+    {
+      "loginStatus": "failure",
+      "err_msg": "EmailId is invalid",
+      "err_field": "emailId"
+    }
+  ]
+}
