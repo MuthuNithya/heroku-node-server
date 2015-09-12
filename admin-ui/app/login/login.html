@@ -4,7 +4,7 @@
         <ng-form name="loginCtrl.formSignIn" novalidate>
             <div class="emailid-sec">
                 <label for="txtEmailId" class="ada-hidden">Email ID</label>
-                <input type="email" name="txtEmailId" id="txtEmailId" ng-model="txtEmailId" placeholder="Email ID" ng-required="true"/>
+                <input type="email" name="txtEmailId" id="txtEmailId" ng-model="loginCtrl.signInData.userName" placeholder="Email ID" ng-required="true"/>
                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignIn.$submitted && loginCtrl.formSignIn.txtEmailId.$invalid">
                     <span ng-show="loginCtrl.formSignIn.txtEmailId.$error.required">Email ID is required</span>
                     <span ng-show="loginCtrl.formSignIn.txtEmailId.$error.email">Enter a valid Email ID</span>
@@ -12,7 +12,7 @@
             </div>
             <div class="password-sec">
                 <label for="txtPassWord" class="ada-hidden">Password</label>
-                <input type="password" name="txtPassWord" id="txtPassWord" ng-model="txtPassWord" placeholder="Password" ng-required="true"/>
+                <input type="password" name="txtPassWord" id="txtPassWord" ng-model="loginCtrl.signInData.passWord" placeholder="Password" ng-required="true"/>
                  <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignIn.$submitted  && loginCtrl.formSignIn.txtPassWord.$invalid">
                     <span ng-show="loginCtrl.formSignIn.txtPassWord.$error.required">Password is required</span>
                 </span>
@@ -27,14 +27,14 @@
         <ng-form name="loginCtrl.formSignUp" novalidate>
             <div class="username-sec">
                 <label class="ada-hidden">UserName</label>
-                <input type="text" name="txtUName" ng-model="txtName" placeholder="UserName" ng-required="true"/>
+                <input type="text" name="txtUName" ng-model="loginCtrl.signUpData.userName" placeholder="UserName" ng-required="true"/>
                  <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted  && loginCtrl.formSignUp.txtUName.$invalid">
                      <span ng-show="loginCtrl.formSignUp.txtUName.$error.required">Username is required.</span>
                  </span>
             </div>
             <div class="emailid-sec">
                 <label for="txtSignUpEmailId" class="ada-hidden">Email ID</label>
-                <input type="email" name="txtSignUpEmailId" id="txtSignUpEmailId" ng-model="txtSignUpEmailId" placeholder="Email ID" ng-required="true"/>
+                <input type="email" name="txtSignUpEmailId" id="txtSignUpEmailId" ng-model="loginCtrl.signUpData.emailID" placeholder="Email ID" ng-required="true"/>
                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpEmailId.$invalid">
                     <span ng-show="loginCtrl.formSignUp.txtSignUpEmailId.$error.required">Email ID is required</span>
                     <span ng-show="loginCtrl.formSignUp.txtSignUpEmailId.$error.email">Enter a valid Email ID</span>
@@ -42,14 +42,14 @@
             </div>
             <div class="password-sec">
                 <label for="txtSignUpPassWord" class="ada-hidden">Password</label>
-                <input type="password" name="txtSignUpPassWord" id="txtSignUpPassWord" ng-model="txtSignUpPassWord" placeholder="Password" ng-required="true"/>
+                <input type="password" name="txtSignUpPassWord" id="txtSignUpPassWord" ng-model="loginCtrl.signUpData.passWord" placeholder="Password" ng-required="true"/>
                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpPassWord.$invalid">
                      <span ng-show="loginCtrl.formSignUp.txtSignUpPassWord.$error.required">Password is required.</span>
                  </span>
             </div>
             <div class="conf-password-sec">
                 <label for="txtSignUpConfPassWord" class="ada-hidden">Confirm Password</label>
-                <input type="password" name="txtSignUpConfPassWord" id="txtSignUpConfPassWord" ng-model="txtSignUpConfPassWord" placeholder="Confirm Password" ng-required="true" compare-to="txtSignUpPassWord"/>
+                <input type="password" name="txtSignUpConfPassWord" id="txtSignUpConfPassWord" ng-model="loginCtrl.signUpData.confirmPassword" placeholder="Confirm Password" ng-required="true" compare-to="loginCtrl.signUpData.passWord"/>
                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpConfPassWord.$invalid">
                      <span ng-show="loginCtrl.formSignUp.txtSignUpConfPassWord.$error.required">Confirm password is required.</span>
                     <span ng-show="loginCtrl.formSignUp.txtSignUpConfPassWord.$error.compareTo">Confirm password should match</span>
