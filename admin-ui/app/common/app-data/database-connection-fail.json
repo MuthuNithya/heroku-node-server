@@ -1,0 +1,9 @@
+{
+  "result": [
+    {
+      "status": "fail",
+      "err_msg": "Unexpected Service Failure",
+      "err_field": "login"
+    }
+  ]
+}

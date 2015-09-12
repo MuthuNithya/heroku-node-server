@@ -1,0 +1,9 @@
+{
+  "result": [
+    {
+      "status": "fail",
+      "err_msg": "emailId already exists",
+      "err_field": "emailId"
+    }
+  ]
+}
