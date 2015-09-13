@@ -5,5 +5,7 @@
     "use strict";
     angular.module('workmanagement').controller('WorkManagementController',['$scope',function($scope){
         var wmc = this;
+        $scope.serviceError = false;
+        $scope.errorMsg = '';
     }]);
 })();

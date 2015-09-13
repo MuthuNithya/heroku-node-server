@@ -9,4 +9,7 @@
         <li><a href="javascript:void(0);">Contact Us</a></li>
     </ul>
     <div class="clear"></div>
+    <div class="alert-box large fa fa-exclamation-triangle page-level-error" ng-if="wmc.serviceError">
+        <span>{{wmc.errorMsg}}</span>
+    </div>
 </header>
