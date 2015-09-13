@@ -16,7 +16,9 @@
     app.post('/auth_login', function (req, res) {
         repoConnect.authorizeLogin('login', req.body, res);
     });
-
+    app.post('/auth_signup', function(req, res){
+        repoConnect.authorizeLogin('signup', req.body, res);
+    });
     var server = app.listen(8081, function () {
         var host = server.address().address;
         var port = server.address().port;
