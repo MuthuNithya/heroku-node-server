@@ -34,7 +34,7 @@
                             username: item.username,
                             userid: item._id
                         };
-                        res.send(fetchUser);
+                        res.send({result:[fetchUser]});
                         db.close();
                     }
                 }else{
@@ -43,7 +43,7 @@
                         "status": "failure",
                         "err_msg": "EmailId/Password is invalid"
                     };
-                    res.send(resObj);
+                    res.send({result:[resObj]});
                     db.close();
                 }
             }else if (err){
@@ -52,7 +52,7 @@
                     "err_msg": "Unexpected Service Failure",
                     "err_field": "login"
                 };
-                res.send(resObj);
+                res.send({result:[resObj]});
                 db.close();
             }
             return;
@@ -68,14 +68,14 @@
                     "err_msg": "emailId already exists",
                     "err_field": "emailId"
                 };
-                res.send(resObj);
+                res.send({result:[resObj]});
                 db.close();
 
             }else{
                 // Insert a single document
                 collection.insert([req], function (err, result) {
                     if(!assert.equal(null, err)){
-                        res.send({"status": "success"});
+                        res.send({result:[{"status": "success"}]});
                         db.close();
                     }else if (err){
                         var resObj = {
@@ -83,7 +83,7 @@
                             "err_msg": "Unexpected Service Failure",
                             "err_field": "login"
                         };
-                        res.send(resObj);
+                        res.send({result:[resObj]});
                         db.close();
                     }
                 })
