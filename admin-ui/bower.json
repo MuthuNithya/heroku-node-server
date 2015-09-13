@@ -11,6 +11,7 @@
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
-    "zurb/bower-foundation": "~5.4.7"
+    "angular-ui-router":"~0.2.13",
+    "foundation": "~5.4.7"
   }
 }
