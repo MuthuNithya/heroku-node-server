@@ -12,4 +12,8 @@
     <div class="alert-box large fa fa-exclamation-triangle page-level-error" ng-if="wmc.serviceError">
         <span>{{wmc.errorMsg}}</span>
     </div>
+    <div class="alert-box success" ng-if="wmc.successMessage">
+        <i class="fa fa-check"></i>
+        <span>{{wmc.positiveMsg}}</span>
+    </div>
 </header>

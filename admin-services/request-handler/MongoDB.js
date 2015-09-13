@@ -28,13 +28,24 @@
         collection.findOne({emailId: req.emailId}, function (err, item) {
             if(!assert.equal(null, err)){
                 if(item && item.emailId === req.emailId){
+                    console.log('item ',item);
                     if(item.password === req.password){
                         fetchUser = {
                             status: "success",
                             username: item.username,
                             userid: item._id
                         };
+                        console.log('step1 ',fetchUser);
                         res.send({result:[fetchUser]});
+                        db.close();
+                    } else{
+                        //emailId is invalid
+                        var resObj = {
+                            "status": "failure",
+                            "err_msg": "EmailId/Password is invalid"
+                        };
+                        console.log('step2 ',resObj);
+                        res.send({result:[resObj]});
                         db.close();
                     }
                 }else{
@@ -43,15 +54,17 @@
                         "status": "failure",
                         "err_msg": "EmailId/Password is invalid"
                     };
+                    console.log('step2 ',resObj);
                     res.send({result:[resObj]});
                     db.close();
                 }
             }else if (err){
                 var resObj = {
-                    "status": "fail",
+                    "status": "failure",
                     "err_msg": "Unexpected Service Failure",
                     "err_field": "login"
                 };
+                console.log('step3 ',resObj);
                 res.send({result:[resObj]});
                 db.close();
             }
@@ -64,7 +77,7 @@
         collection.findOne({emailId: req.emailId}, function (err, item) {
             if(!assert.equal(null, err)){
                 var resObj = {
-                    "status": "fail",
+                    "status": "failure",
                     "err_msg": "emailId already exists",
                     "err_field": "emailId"
                 };
@@ -79,7 +92,7 @@
                         db.close();
                     }else if (err){
                         var resObj = {
-                            "status": "fail",
+                            "status": "failure",
                             "err_msg": "Unexpected Service Failure",
                             "err_field": "login"
                         };

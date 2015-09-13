@@ -20,7 +20,24 @@
             if(formMode === 'signup') {
                 loginCtrl.formSignUp.$submitted = true;
                 if (loginCtrl.formSignUp.$valid) {
-
+                    var signupData = loginService.signupUser(loginCtrl.signUpData);
+                    var all = $q.all([userDet]);
+                    all.then(function (data) {
+                        if (data[0] && data[0].result[0]) {
+                            if (data[0].result[0].status === 'success') {
+                                $scope.serviceError = false;
+                                console.log('Registration success');
+                            } else if (data[0].result[0].status === 'failure') {
+                                $scope.serviceError = true;
+                                $scope.errorMsg = data[0].result[0].err_msg;
+                            }
+                        }
+                        ;
+                    }, function (reject) {
+                        console.log('Registration failed');
+                        $scope.errorMsg = 'System currently unavailable. Please try again later.';
+                        $scope.serviceError = true;
+                    });
                 }
             } else {
                 loginCtrl.formSignIn.$submitted = true;
@@ -28,15 +45,15 @@
                     var userDet = loginService.validateLogin(loginCtrl.signInData);
                     var all = $q.all([userDet]);
                     all.then(function (data) {
-                        if (data && data.length > 0) {
-                            if (data[0].status === 'success') {
-                                loginCtrl.currentUser.userId = data[0].userid;
-                                loginCtrl.currentUser.userName = data[0].username;
+                        if (data[0] && data[0].result[0]) {
+                            if (data[0].result[0].status === 'success') {
+                                loginCtrl.currentUser.userId = data[0].result[0].userid;
+                                loginCtrl.currentUser.userName = data[0].result[0].username;
                                 $scope.serviceError = false;
                                 console.log('Authetication success');
-                            } else if (data[0].status === 'failure') {
+                            } else if (data[0].result[0].status === 'failure') {
                                 $scope.serviceError = true;
-                                $scope.errorMsg = data[0].err_msg;
+                                $scope.errorMsg = data[0].result[0].err_msg;
                             }
                         }
                         ;
