@@ -27,8 +27,8 @@
         var fetchUser = {};
         collection.findOne({emailId: req.emailId}, function (err, item) {
             if(!assert.equal(null, err)){
-                if(assert.equal(item.emailId, req.emailId)){
-                    if(assert.equal(item.password, req.password)){
+                if(item && item.emailId === req.emailId){
+                    if(item.password === req.password){
                         fetchUser = {
                             status: "success",
                             username: item.username,
