@@ -72,10 +72,10 @@
         });
     }
 
-    function createUser(collection, req, db){
+    function createUser(collection, req, res, db){
         //duplicate check
         collection.findOne({emailId: req.emailId}, function (err, item) {
-            if(!assert.equal(null, err)){
+            if(item && item.emailId === req.emailId){
                 var resObj = {
                     "status": "failure",
                     "err_msg": "emailId already exists",
@@ -86,20 +86,22 @@
 
             }else{
                 // Insert a single document
-                collection.insert([req], function (err, result) {
-                    if(!assert.equal(null, err)){
-                        res.send({result:[{"status": "success"}]});
-                        db.close();
-                    }else if (err){
-                        var resObj = {
-                            "status": "failure",
-                            "err_msg": "Unexpected Service Failure",
-                            "err_field": "login"
-                        };
-                        res.send({result:[resObj]});
-                        db.close();
-                    }
-                })
+                if(req.emailId && req.password && req.username){
+                    collection.insert([req], function (err, result) {
+                        if(!assert.equal(null, err)){
+                            res.send({result:[{"status": "success"}]});
+                            db.close();
+                        }else if (err){
+                            var resObj = {
+                                "status": "failure",
+                                "err_msg": "Unexpected Service Failure",
+                                "err_field": "login"
+                            };
+                            res.send({result:[resObj]});
+                            db.close();
+                        }
+                    })
+                }
             }
         });
         return;

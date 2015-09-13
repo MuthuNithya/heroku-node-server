@@ -27,14 +27,14 @@
         <ng-form name="loginCtrl.formSignUp" novalidate>
             <div class="username-sec">
                 <label class="ada-hidden">UserName</label>
-                <input type="text" name="txtUName" ng-model="loginCtrl.signUpData.userName" placeholder="UserName" ng-required="true"/>
+                <input type="text" name="txtUName" ng-model="loginCtrl.signUpData.username" placeholder="UserName" ng-required="true"/>
                  <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted  && loginCtrl.formSignUp.txtUName.$invalid">
                      <span ng-show="loginCtrl.formSignUp.txtUName.$error.required">Username is required.</span>
                  </span>
             </div>
             <div class="emailid-sec">
                 <label for="txtSignUpEmailId" class="ada-hidden">Email ID</label>
-                <input type="email" name="txtSignUpEmailId" id="txtSignUpEmailId" ng-model="loginCtrl.signUpData.emailID" placeholder="Email ID" ng-required="true"/>
+                <input type="email" name="txtSignUpEmailId" id="txtSignUpEmailId" ng-model="loginCtrl.signUpData.emailId" placeholder="Email ID" ng-required="true"/>
                 <span class="errorfield fa fa-exclamation-triangle" ng-if="loginCtrl.formSignUp.$submitted && loginCtrl.formSignUp.txtSignUpEmailId.$invalid">
                     <span ng-show="loginCtrl.formSignUp.txtSignUpEmailId.$error.required">Email ID is required</span>
                     <span ng-show="loginCtrl.formSignUp.txtSignUpEmailId.$error.email">Enter a valid Email ID</span>

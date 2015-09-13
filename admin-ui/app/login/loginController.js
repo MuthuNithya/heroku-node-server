@@ -3,7 +3,7 @@
     angular.module('workmanagement.login').controller('loginController',['$scope','loginService','$q',function($scope,loginService,$q){
     var loginCtrl=this;
         loginCtrl.currentUser={
-            "userName":"",
+            "username":"",
             "userId":""
         };
         loginCtrl.signInData={
@@ -11,7 +11,7 @@
                             "password":""
                             };
         loginCtrl.signUpData={
-                            "userName":"",
+                            "username":"",
                             "emailId":"",
                             "password":"",
                             "confirmPassword":""
@@ -31,8 +31,7 @@
                                 $scope.serviceError = true;
                                 $scope.errorMsg = data[0].result[0].err_msg;
                             }
-                        }
-                        ;
+                        };
                     }, function (reject) {
                         console.log('Registration failed');
                         $scope.errorMsg = 'System currently unavailable. Please try again later.';
@@ -48,7 +47,7 @@
                         if (data[0] && data[0].result[0]) {
                             if (data[0].result[0].status === 'success') {
                                 loginCtrl.currentUser.userId = data[0].result[0].userid;
-                                loginCtrl.currentUser.userName = data[0].result[0].username;
+                                loginCtrl.currentUser.username = data[0].result[0].username;
                                 $scope.serviceError = false;
                                 console.log('Authetication success');
                             } else if (data[0].result[0].status === 'failure') {
