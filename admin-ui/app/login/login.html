@@ -1,3 +1,11 @@
+<div data-alert class="alert-box large fa fa-exclamation-triangle page-level-error" ng-if="serviceError">
+    <i class="fi-x"></i>
+    <span>{{errorMsg}}</span>
+</div>
+<div data-alert class="alert-box success positive-message" ng-if="successMessage">
+    <i class="ionicons ion-checkmark-circled"></i>
+    <span>{{positiveMsg}}</span>
+</div>
 <div class="divLoginModule">
     <div class="signin-module large-5 columns">
         <h2>Sign In</h2>

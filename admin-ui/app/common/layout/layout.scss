@@ -3,6 +3,25 @@ $headerfont: 'Roboto Slab', serif;
   .header-title{
     font-family:$headerfont;
     color:white;
+    float:left;
+    width:34%;
+    @media only screen
+    and (min-device-width: 414px)
+    and (max-device-width: 736px){
+      font-size: 2rem;
+    }
+    @media only screen
+    and (min-device-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+  nav{
+    margin-top:20px;
+    .dropdown{
+      a{
+        background:#999 !important;
+      }
+    }
   }
   .header-logo{
     font-family: FontAwesome;
@@ -13,7 +32,11 @@ $headerfont: 'Roboto Slab', serif;
     padding: 1px 20px;
   }
   ul.inline-list{
-    margin: 10px 10px 10px 0;
+    margin: 20px 0 0 0;
+    color:#FFF;
+    a{
+      color:#FFF;
+    }
   }
 }
 

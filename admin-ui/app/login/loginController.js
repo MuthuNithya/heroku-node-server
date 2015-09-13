@@ -1,7 +1,11 @@
 (function(){
 "use strict";
-    angular.module('workmanagement.login').controller('loginController',['$scope','loginService','$q',function($scope,loginService,$q){
+    angular.module('workmanagement.login').controller('loginController',['$scope','loginService','$q','$state',function($scope,loginService,$q,$state){
     var loginCtrl=this;
+        $scope.serviceError = false;
+        $scope.errorMsg = '';
+        $scope.positiveMsg='';
+        $scope.successMessage = false;
         loginCtrl.currentUser={
             "username":"",
             "userId":""
@@ -21,12 +25,14 @@
                 loginCtrl.formSignUp.$submitted = true;
                 if (loginCtrl.formSignUp.$valid) {
                     var signupData = loginService.signupUser(loginCtrl.signUpData);
-                    var all = $q.all([userDet]);
+                    var all = $q.all([signupData]);
                     all.then(function (data) {
                         if (data[0] && data[0].result[0]) {
                             if (data[0].result[0].status === 'success') {
                                 $scope.serviceError = false;
                                 console.log('Registration success');
+                                $scope.positiveMsg = 'Registration Successful. Please login to enter.';
+                                $scope.successMessage = true;
                             } else if (data[0].result[0].status === 'failure') {
                                 $scope.serviceError = true;
                                 $scope.errorMsg = data[0].result[0].err_msg;
@@ -50,6 +56,7 @@
                                 loginCtrl.currentUser.username = data[0].result[0].username;
                                 $scope.serviceError = false;
                                 console.log('Authetication success');
+                                $state.go('dashboard');
                             } else if (data[0].result[0].status === 'failure') {
                                 $scope.serviceError = true;
                                 $scope.errorMsg = data[0].result[0].err_msg;
