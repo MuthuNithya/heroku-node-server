@@ -6,7 +6,7 @@
             var deferred = $q.defer();
             $http({
                 method:'POST',
-                url:'http://localhost:8081/auth_login',
+                url:'http://briztlers.com:8081/auth_login',
                 data:loginDetails,
                 "Content-Type": "application/json",
                 headers:{
@@ -24,7 +24,7 @@
             var deferred = $q.defer();
             $http({
                 method:'POST',
-                url:'http://localhost:8081/auth_signup',
+                url:'http://briztlers.com:8081/auth_signup',
                 data:signupDet,
                 "Content-Type": "application/json",
                 headers:{
