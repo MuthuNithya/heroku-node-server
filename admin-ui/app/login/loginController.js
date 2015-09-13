@@ -19,9 +19,12 @@
         loginCtrl.submitForm = function(formMode){
             if(formMode === 'signup') {
                 loginCtrl.formSignUp.$submitted = true;
+                if (loginCtrl.formSignUp.$valid) {
+
+                }
             } else {
                 loginCtrl.formSignIn.$submitted = true;
-                if (loginCtrl.formSignIn.valid) {
+                if (loginCtrl.formSignIn.$valid) {
                     var userDet = loginService.validateLogin(loginCtrl.signInData);
                     var all = $q.all([userDet]);
                     all.then(function (data) {
