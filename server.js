@@ -37,5 +37,4 @@
     server.listen(server_port, function(){
       console.log("Listening on " + ", server_port " + server_port)
     });
-t:q
 })();
