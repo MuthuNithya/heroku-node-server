@@ -23,8 +23,8 @@
         repoConnect.authorizeLogin('signup', req.body, res);
     });
     var server_port = process.env.PORT || 5000;
-    var server = require('http').createServer(app);
-    var io = require("socket.io")(server);
+    //var server = require('http').createServer(app);
+   /* var io = require("socket.io")(server);
 
     var handleClient = function (socket) {
         socket.sendUTF("hello");
@@ -33,8 +33,9 @@
     
     io.on("connection", handleClient);
     
-    console.log(" on " + ", server_port " + server_port)
-    server.listen(server_port, function(){
+    console.log(" on " + ", server_port " + server_port)*/
+    app.listen(server_port, function(){
       console.log("Listening on " + ", server_port " + server_port)
     });
+t:q
 })();
