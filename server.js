@@ -22,7 +22,7 @@
     app.post('/auth_signup', function(req, res){
         repoConnect.authorizeLogin('signup', req.body, res);
     });
-    var server_port = process.env.PORT || 5000);
+    var server_port = process.env.PORT || 5000;
     var server = require('http').createServer(app);
     var io = require("socket.io")(server);
 
