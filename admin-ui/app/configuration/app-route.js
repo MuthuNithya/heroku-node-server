@@ -1,5 +1,5 @@
 (function(){
-    angular.module('workmanagement',['ui.router','workmanagement.login']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+    angular.module('workmanagement',['ui.router','workmanagement.login','workmanagement.dashboard','workmanagement.logout']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
             $state.go('login');
@@ -24,7 +24,8 @@
             .state('dashboard',{
                 url:'/dashboard',
                 templateUrl:'app/dashboard/dashboard.html',
-                controller: ''
+                controller: 'dashboardController',
+                controllerAs: 'dashboardCtrl'
             })
             .state('create',{
                 url:'/create',
@@ -39,7 +40,8 @@
             .state('logout',{
                 url:'/logged-out',
                 templateUrl:'app/logout/logout.html',
-                controller: ''
+                controller: 'logoutController',
+                controllerAs: 'logoutCtrl'
             })
 
     }]);

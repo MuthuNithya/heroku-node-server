@@ -1,28 +1,32 @@
 <header class="header-module">
     <div class="type-demo">
-        <!--<div class="fl-lt">-->
         <h1 class="header-title">
             <span class="header-logo fa fa-stack-overflow"></span>Work Management
         </h1>
-    <!--</div>-->
-        <!--<nav class="top-bar fl-lt" data-topbar>
-            <section class="top-bar-section">
-                <ul class="center">
-                    <li class="has-dropdown">
-                        <a href="#">Top Nav</a>
-                        <ul class="dropdown">
-                            <li><a href="#">Nav1</a></li>
-                            <li><a href="#">Nav2</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-        </nav>-->
-        <ul class="inline-list fl-rt">
+        <ul class="inline-list fl-rt" ng-if="!wmc.currentUser.loginStatus">
             <li><a href="javascript:void(0);">About</a></li>
             <li>&#124;</li>
             <li><a href="javascript:void(0);">Contact Us</a></li>
         </ul>
+        <ul class="inline-list fl-rt" ng-if="wmc.currentUser.loginStatus">
+            <li>Hello {{wmc.currentUser.userName}}</li>
+            <li>&#124;</li>
+            <li><a href="javascript:void(0);" ng-click="wmc.logout();">Log Out</a></li>
+        </ul>
         <div class="clear"></div>
-        </div>
-    </header>
+    </div>
+    <div class="icon-bar three-up" role="navigation" ng-if="wmc.currentUser.loginStatus">
+        <a class="item" aria-labelledby="#lblHome">
+            <i class="fa fa-home"></i>
+            <label id="lblHome">Home</label>
+        </a>
+        <a class="item" aria-labelledby="#lblCreateWorksheet">
+            <i class="fa fa-balance-scale"></i>
+            <label id="lblCreateWorksheet">Create Worksheet</label>
+        </a>
+        <a class="item" aria-labelledby="#lblHistory">
+            <i class="fa fa-calendar-times-o"></i>
+            <label id="lblHistory">History</label>
+        </a>
+    </div>
+</header>
