@@ -1,0 +1,16 @@
+.create-work-sheet{
+  padding: 20px;
+  .cal-sec{
+    input.datepicker{
+      width:15%;
+      height: 25px;
+    }
+    .datepicker-label{
+      float:left;
+      width:11%;
+    }
+    .datepicker-input{
+      float:left;
+    }
+  }
+}

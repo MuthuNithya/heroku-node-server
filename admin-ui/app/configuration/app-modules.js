@@ -4,5 +4,5 @@
         angular.module('workmanagement.login', ['ngCookies']);
         angular.module('workmanagement.dashboard', ['ngCookies']);
         angular.module('workmanagement.logout', []);
-    }
-)();
+        angular.module('workmanagement.create',['ngCookies']);
+    })();

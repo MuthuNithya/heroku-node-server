@@ -1,0 +1,18 @@
+
+<div class="create-work-sheet">
+    <div data-alert class="alert-box large fa fa-exclamation-triangle page-level-error" ng-if="serviceError">
+        <i class="fi-x"></i>
+        <span>{{errorMsg}}</span>
+    </div>
+    <div data-alert class="alert-box success positive-message" ng-if="successMessage">
+        <i class="ionicons ion-checkmark-circled"></i>
+        <span>{{positiveMsg}}</span>
+    </div>
+
+    <div class="cal-sec">
+        <div class="datepicker-label hide-for-small-only"><label for="datepicker">Choose Work Date</label></div>
+        <div class="datepicker-label show-for-small-only"><label for="datepicker">Pick Date</label></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" readonly/><span><i class="fa fa-calendar"></i></span></div>
+        <div class="clear"></div>
+    </div>
+</div>

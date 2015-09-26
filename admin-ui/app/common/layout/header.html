@@ -16,15 +16,15 @@
         <div class="clear"></div>
     </div>
     <div class="icon-bar three-up" role="navigation" ng-if="wmc.currentUser.loginStatus">
-        <a class="item" aria-labelledby="#lblHome">
+        <a class="item" aria-labelledby="#lblHome" id="ancHome" ng-click="wmc.topNavClick('#ancHome');">
             <i class="fa fa-home"></i>
             <label id="lblHome">Home</label>
         </a>
-        <a class="item" aria-labelledby="#lblCreateWorksheet">
+        <a class="item" aria-labelledby="#lblCreateWorksheet" id="ancCreateWorksheet" ng-click="wmc.topNavClick('#ancCreateWorksheet');">
             <i class="fa fa-balance-scale"></i>
             <label id="lblCreateWorksheet">Create Worksheet</label>
         </a>
-        <a class="item" aria-labelledby="#lblHistory">
+        <a class="item" aria-labelledby="#lblHistory" id="ancHistory" ng-click="wmc.topNavClick('#ancHistory');">
             <i class="fa fa-calendar-times-o"></i>
             <label id="lblHistory">History</label>
         </a>

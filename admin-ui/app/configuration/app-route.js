@@ -1,5 +1,5 @@
 (function(){
-    angular.module('workmanagement',['ui.router','workmanagement.login','workmanagement.dashboard','workmanagement.logout']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+    angular.module('workmanagement',['ui.router','workmanagement.login','workmanagement.dashboard','workmanagement.logout','workmanagement.create']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
             $state.go('login');
@@ -30,7 +30,8 @@
             .state('create',{
                 url:'/create',
                 templateUrl:'app/create/create.html',
-                controller: ''
+                controller: 'createController',
+                controllerAs:'createCtrl'
             })
             .state('history',{
                 url:'/history',

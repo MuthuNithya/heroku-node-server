@@ -9,6 +9,9 @@
         wmc.logout = function(){
             wms.logout();
         }
+        wmc.topNavClick= function (linkid) {
+            wms.topNavClick(linkid);
+        }
         $scope.$watch(function() {
             return $cookies.get('uName');
         }, function(newValue, oldValue) {

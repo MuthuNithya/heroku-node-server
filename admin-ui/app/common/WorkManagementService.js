@@ -29,6 +29,29 @@
         wms.logout=function(){
             $state.go('logout');
         }
+        wms.topNavClick=function(linkid){
+            if($(linkid).hasClass('Selected')){
+                return;
+            } else{
+                if(linkid === '#ancHome'){
+                    $state.go('dashboard');
+                    $('a#ancHome').addClass('Selected');
+                    $('a#ancCreateWorksheet').removeClass('Selected');
+                    $('a#ancHistory').removeClass('Selected');
+                } else if(linkid === '#ancCreateWorksheet'){
+                    $state.go('create');
+                    $('a#ancHome').removeClass('Selected');
+                    $('a#ancCreateWorksheet').addClass('Selected');
+                    $('a#ancHistory').removeClass('Selected');
+                } else{
+                    $state.go('history');
+                    $('a#ancHome').removeClass('Selected');
+                    $('a#ancCreateWorksheet').removeClass('Selected');
+                    $('a#ancHistory').addClass('Selected');
+                }
+                return;
+            }
+        }
         return wms;
     }]);
 })();

@@ -43,6 +43,9 @@ $headerfont: 'Roboto Slab', serif;
         display: inline-block;
       }
     }
+    .Selected{
+      background: #008cba none repeat scroll 0 0;
+    }
     div.item{
       margin-top: 15px;
       :hover{
