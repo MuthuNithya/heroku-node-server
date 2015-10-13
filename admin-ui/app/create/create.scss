@@ -1,9 +1,17 @@
 .create-work-sheet{
   padding: 20px;
+  .hide{
+    display: none;
+  }
+  .show{
+    display: block;
+  }
   .cal-sec{
     input.datepicker{
-      width:15%;
       height: 25px;
+      font-family: "abelregular";
+      font-size: 15px;
+      width: 42%;
     }
     .datepicker-label{
       float:left;
@@ -12,5 +20,15 @@
     .datepicker-input{
       float:left;
     }
+  }
+  .effort-table{
+    min-height: 475px;
+  }
+  .mrt-5{
+    margin-right:5px;
+  }
+  .grid{
+    width: 60%;
+    height: 50px;
   }
 }

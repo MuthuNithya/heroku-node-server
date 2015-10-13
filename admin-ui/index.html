@@ -8,13 +8,16 @@
     <link rel="stylesheet" href="app/bower_components/foundation/css/normalize.css"/>
     <link rel="stylesheet" href="app/bower_components/foundation/css/foundation.css"/>
     <link rel="stylesheet" href="app/styles/app.css"/>
-    <link rel="stylesheet" href="node_modules/foundation-datepicker/stylesheets/foundation-datepicker.css"/>
+    <link rel="stylesheet" href="app/bower_components/datetimepicker/jquery.datetimepicker.css"/>
+    <link rel="stylesheet" href="app/bower_components/angular-ui-grid/ui-grid.css"/>
+    <link rel="stylesheet" href="assets/style/jquery.timepicker.css"/>
 </head>
 <body ng-controller="WorkManagementController as wmc">
 <div ng-include="'app/common/layout/header.html'"></div>
 <div ui-view class="main-content"></div>
 <div ng-include="'app/common/layout/footer.html'"></div>
 <script src="app/bower_components/jquery/dist/jquery.js"></script>
+<script src="app/bower_components/datetimepicker/jquery.datetimepicker.js"></script>
 <script src="app/bower_components/angular/angular.js"></script>
 <script src="app/bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -35,6 +38,9 @@
 <script src="node_modules/foundation-datepicker/js/foundation-datepicker.js"></script>
 <script src="app/create/createController.js"></script>
 <script src="app/create/createService.js"></script>
+<script src="app/create/createDirective.js"></script>
+<script src="app/bower_components/angular-ui-grid/ui-grid.js"></script>
+<script src="assets/script/jquery.timepicker.js"></script>
 <script>
     $(document).foundation();
 </script>

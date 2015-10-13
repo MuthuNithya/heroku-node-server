@@ -12,7 +12,13 @@
     <div class="cal-sec">
         <div class="datepicker-label hide-for-small-only"><label for="datepicker">Choose Work Date</label></div>
         <div class="datepicker-label show-for-small-only"><label for="datepicker">Pick Date</label></div>
-        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" readonly/><span><i class="fa fa-calendar"></i></span></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" ng-model="selectedDate" readonly/></div>
         <div class="clear"></div>
+    </div>
+
+    <div class="effort-table">
+        <div>Worksheet for {{selectedDate}}:</div>
+        <a class="button secondary tiny" ng-click="createCtrl.loadEffortTable();"><i class="fa fa-plus mrt-5"></i>Add Effort</a>
+        <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellNav ui-grid-selection class="grid" ng-if="gridOptions.data.length"></div>
     </div>
 </div>
