@@ -11,8 +11,32 @@
 
     <div class="cal-sec">
         <div class="datepicker-label hide-for-small-only"><label for="datepicker">Choose Work Date</label></div>
-        <div class="datepicker-label show-for-small-only"><label for="datepicker">Pick Date</label></div>
-        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" readonly/><span><i class="fa fa-calendar"></i></span></div>
+        <div class="datepicker-label show-for-small-only"><label for="datepicker">Date</label></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" ng-model="selectedDate" readonly/></div>
         <div class="clear"></div>
+    </div>
+
+    <div class="effort-table" ng-if="selectedDate">
+        <div class="first-col">Worksheet for {{selectedDate}}:</div>
+        <div class="second-col"><a class="button secondary tiny" ng-click="createCtrl.loadEffortTable();"><i class="fa fa-plus mrt-5"></i>Add Effort</a></div>
+        <div class="clear"></div>
+        <div class="hide" id="divDeleteEffortbtn">
+            <a class="button alert tiny" ng-click="createCtrl.deleteRows();">Delete</a>
+        </div>
+        <div data-alert="" class="error-msg hide" ng-hide="!gridOptions.data.length">
+            <i class="fa fa-exclamation-triangle"></i> <span></span>
+        </div>
+        <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellNav ui-grid-selection class="grid" ng-if="gridOptions.data.length"></div>
+        <ul id="btnCreateTimeSheet" class="stack-for-small round secondary button-group hide" ng-hide="!gridOptions.data.length">
+            <li><a href="javascript:void(0);" class="button success" id="btnSaveEffort">Save Effort</a></li>
+            <li><a href="javascript:void(0);" class="secondary button" ng-click="createCtrl.cancelEfforts()">Cancel</a></li>
+        </ul>
+    </div>
+    <div class="reveal-modal small" id="divCancelModal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <p id="modalTitle">Are you sure to cancel?. All the efforts entered will be lost</p>
+        <div class="modal-btn">
+            <a href="javascript:void(0);" class="button alert round" ng-click="cleareffort()">Yes</a>
+            <a href="javascript:$('#divCancelModal').foundation('reveal','close');" class="secondary button round">No</a>
+        </div>
     </div>
 </div>

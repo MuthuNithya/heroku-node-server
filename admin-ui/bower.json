@@ -13,7 +13,8 @@
     "angular-cookies": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "angular-ui-router": "~0.2.13",
-    "foundation": "~5.4.7"
+    "foundation": "~5.4.7",
+    "angular-ui-grid":"~3.0.7"
   },
   "resolutions": {
     "angular": "1.4.5"
