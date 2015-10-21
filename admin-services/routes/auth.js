@@ -1,9 +1,10 @@
 var jwt = require('jwt-simple');
+var repoConnect = require('../middleware/loginValidator.js');
 var auth = {
     login: function(req, res) {
-        var username = req.body.username || '';
+        var emailId = req.body.emailId || '';
         var password = req.body.password || '';
-        if (username == '' || password == '') {
+        if (emailId == '' || password == '') {
             res.status(401);
             res.json({
                 "status": 401,
@@ -12,14 +13,9 @@ var auth = {
             return;
         }
 // Fire a query to your DB and check if the credentials are valid
-        var dbUserObj = auth.validate(username, password);
+        var dbUserObj = auth.validate(req, res);
         if (!dbUserObj) { // If authentication fails, we send a 401 back
-            res.status(401);
-            res.json({
-                "status": 401,
-                "message": "Invalid credentials"
-            });
-            return;
+
         }
         if (dbUserObj) {
 // If authentication is success, we will generate a token
@@ -27,22 +23,36 @@ var auth = {
             res.json(genToken(dbUserObj));
         }
     },
-    validate: function(username, password) {
+    signup: function(req, res){
+        var emailId = req.body.emailId || '';
+        var password = req.body.password || '';
+        if (emailId == '' || password == '') {
+            res.status(401);
+            res.json({
+                "status": 401,
+                "message": "Invalid credentials"
+            });
+            return;
+        }
+// Fire a query to your DB and check if the credentials are valid
+        var dbUserObj = auth.validateUser(req, res);
+        if (!dbUserObj) { // If authentication fails, we send a 401 back
+
+        }
+        if (dbUserObj) {
+// If authentication is success, we will generate a token
+// and dispatch it to the client
+
+        }
+    },
+    validate: function(req, res) {
 // spoofing the DB response for simplicity
-        var dbUserObj = { // spoofing a userobject from the DB.
-            name: 'arvind',
-            role: 'admin',
-            username: 'arvind@myapp.com'
-        };
+        var dbUserObj = repoConnect.authorizeLogin('login', req.body, res);
         return dbUserObj;
     },
-    validateUser: function(username) {
+    validateUser: function(req, res) {
 // spoofing the DB response for simplicity
-        var dbUserObj = { // spoofing a userobject from the DB.
-            name: 'arvind',
-            role: 'admin',
-            username: 'arvind@myapp.com'
-        };
+        var dbUserObj = repoConnect.authorizeLogin('signup', req.body, res);
         return dbUserObj;
     },
 };
