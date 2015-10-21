@@ -20,6 +20,7 @@
             if(formMode === 'signup') {
                 loginCtrl.formSignUp.$submitted = true;
                 if (loginCtrl.formSignUp.$valid) {
+                    $('#loadingModal').foundation('reveal', 'open');
                     var signupData = loginService.signupUser(loginCtrl.signUpData);
                     var all = $q.all([signupData]);
                     all.then(function (data) {
@@ -34,16 +35,19 @@
                                 $scope.errorMsg = data[0].result[0].err_msg;
                             }
                         };
+                        $('#loadingModal').foundation('reveal', 'close');
                     }, function (reject) {
                         console.log('Registration failed');
                         $scope.errorMsg = 'System currently unavailable. Please try again later.';
                         $scope.serviceError = true;
+                        $('#loadingModal').foundation('reveal', 'close');
                     });
                 }
             } else {
                 loginCtrl.formSignIn.$submitted = true;
                 if (loginCtrl.formSignIn.$valid) {
                     var userDet = loginService.validateLogin(loginCtrl.signInData);
+                    $('#loadingModal').foundation('reveal', 'open');
                     var all = $q.all([userDet]);
                     all.then(function (data) {
                         if (data[0] && data[0].result[0]) {
@@ -64,6 +68,7 @@
                                 wms.getCookieData();
                             }
                         };
+                        $('#loadingModal').foundation('reveal', 'close');
                     }, function (reject) {
                         console.log('Authetication failed');
                         $scope.errorMsg = 'System currently unavailable. Please try again later.';
@@ -71,6 +76,7 @@
                         $cookies.remove('uName');
                         $cookies.remove('uID');
                         wms.getCookieData();
+                        $('#loadingModal').foundation('reveal', 'close');
                     });
                 }
                 console.log(loginCtrl.signUpData);

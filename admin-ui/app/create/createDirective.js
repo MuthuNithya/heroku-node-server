@@ -22,6 +22,13 @@
                         var timepicker = element.timepicker();
                         text = timepicker.format(time);
                         element.siblings().text(text);
+                    },
+                    select: function (time) {
+                        var element = $(this), text;
+                        // get access to this TimePicker instance
+                        var timepicker = element.timepicker();
+                        text = timepicker.format(time);
+                        element.siblings().text(text);
                     }
                 });
             }

@@ -18,8 +18,8 @@
                 enableSorting: false,
                 enableCellEditOnFocus: true,
                 enableColumnMenus:false,
-                showColumnFooter: true,
-                enableCellSelection:true,
+                enableRowSelection: true,
+                enableSelectAll: false,
                 enableFiltering: false,
                 enableHiding: false,
                 columnDefs: [
@@ -53,10 +53,6 @@
                         cellClass:'effortDesc'
                     }
                 ]};
-        };
-        createserv.loadEffortTable = function(gridOptions){
-            gridOptions.data.push(angular.copy(createserv.addEffortObj));
-            return true;
         };
         return createserv;
     }]);

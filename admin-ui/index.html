@@ -2,6 +2,7 @@
 <html lang="en" ng-app="workmanagement">
 <head>
     <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
     <title>Work Management</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -16,6 +17,9 @@
 <div ng-include="'app/common/layout/header.html'"></div>
 <div ui-view class="main-content"></div>
 <div ng-include="'app/common/layout/footer.html'"></div>
+<div id="loadingModal" class="reveal-modal tiny" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <img src="assets/images/loading.gif" alt="loading spinner"/>
+</div>
 <script src="app/bower_components/jquery/dist/jquery.js"></script>
 <script src="app/bower_components/datetimepicker/jquery.datetimepicker.js"></script>
 <script src="app/bower_components/angular/angular.js"></script>
