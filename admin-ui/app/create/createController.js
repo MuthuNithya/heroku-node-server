@@ -35,6 +35,7 @@
             $scope.gridOptions.data.length=0;
             $('#btnCreateTimeSheet').addClass('hide');
             $('.error-msg').addClass('hide');
+            $('#divDeleteEffortbtn').addClass('hide');
             $('#divCancelModal').foundation('reveal','close');
         }
         $scope.gridOptions.onRegisterApi = function (gridApi) {

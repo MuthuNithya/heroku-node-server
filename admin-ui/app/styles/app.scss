@@ -4,6 +4,9 @@
 
 body{
   font-family: Helvetica, Roboto, Arial, sans-serif;
+  #loadingModal{
+    text-align: center;
+  }
   .page-level-error{
     padding: 15px;
     background-color: rgba(234, 17, 17, 0.81);
