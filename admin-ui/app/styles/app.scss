@@ -7,6 +7,13 @@ body{
   #loadingModal{
     text-align: center;
   }
+  .button.tiny{
+    padding: 0.75em 1em;
+    font-size: 0.8em;
+  }
+  .button.round {
+    border-radius: 10px;
+  }
   .page-level-error{
     padding: 15px;
     background-color: rgba(234, 17, 17, 0.81);

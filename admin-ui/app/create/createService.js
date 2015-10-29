@@ -30,7 +30,6 @@
                         enableHiding: false,
                         width: '15%',
                         cellClass:'fromTime',
-                        enableCellEdit: true,
                         editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity.fromTime"/>'
                     },
                     {
@@ -40,7 +39,6 @@
                         enableHiding: false,
                         width: '15%',
                         cellClass:'toTime',
-                        enableCellEdit: true,
                         editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity.toTime"/>'
                     },
                     {

@@ -28,6 +28,31 @@
             }
             return true;
         };
+        createCtrl.validateEffortData = function(gridData){
+            var gridlength = gridData.length;
+            var x1,x2,y1,y2;
+            for( var i = 0; i<gridlength;i++) {
+                for (var j = 0; j < gridlength; j++) {
+                    if(i !== j) {
+                        x1 = createCtrl.convertTime(gridData[i].fromTime);
+                        x2 = createCtrl.convertTime(gridData[i].toTime);
+                        y1 = createCtrl.convertTime(gridData[j].fromTime);
+                        y2 = createCtrl.convertTime(gridData[j].toTime);
+                        if (createCtrl.isOverlapping(x1,x2,y1,y2) || x1 > x2 || y1 > y2 ) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        };
+        createCtrl.isOverlapping =function(x1,x2,y1,y2){
+            return x1 < y2 && y1 < x2;
+        };
+        createCtrl.convertTime = function(timeval){
+            timeval = timeval.replace(':','.');
+            return (Number(timeval.toString().split('.')[0]) * 60) + Number(timeval.toString().split('.')[1]);
+        };
         createCtrl.cancelEfforts = function(){
             $('#divCancelModal').foundation('reveal','open');
         };
@@ -37,11 +62,32 @@
             $('.error-msg').addClass('hide');
             $('#divDeleteEffortbtn').addClass('hide');
             $('#divCancelModal').foundation('reveal','close');
+        };
+        $scope.submitEffort = function(){
+            if(createCtrl.validateGridDataEmpty($scope.gridOptions.data)) {
+                if(createCtrl.validateEffortData($scope.gridOptions.data)){
+                    console.log('Success');
+                    $scope.successMessage = true;
+                    $scope.positiveMsg = 'Efforts saved successfully.';
+                    $('.error-msg').addClass('hide');
+                    $('#btnCreateTimeSheet').removeClass('hide');
+                    return true;
+                } else{
+                    $scope.successMessage = false;
+                    $('.error-msg span').text('Please correct from time and to time entered in all column/s.');
+                    $('.error-msg').removeClass('hide');
+                }
+            } else{
+                $scope.successMessage = false;
+                $('.error-msg span').text('Please fill all column/s in effort table before adding new effort.');
+                $('.error-msg').removeClass('hide');
+            }
         }
         $scope.gridOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 $scope.deleteRow = gridApi.selection.getSelectedRows();
+                $scope.successMessage = false;
                 if($scope.deleteRow.length>0){
                     $('#divDeleteEffortbtn').removeClass('hide');
                 } else{

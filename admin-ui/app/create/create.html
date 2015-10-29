@@ -5,7 +5,7 @@
         <span>{{errorMsg}}</span>
     </div>
     <div data-alert class="alert-box success positive-message" ng-if="successMessage">
-        <i class="ionicons ion-checkmark-circled"></i>
+        <i class="fa fa-check-square-o"></i>
         <span>{{positiveMsg}}</span>
     </div>
 
@@ -28,7 +28,7 @@
         </div>
         <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellNav ui-grid-selection class="grid" ng-if="gridOptions.data.length"></div>
         <ul id="btnCreateTimeSheet" class="stack-for-small round secondary button-group hide" ng-hide="!gridOptions.data.length">
-            <li><a href="javascript:void(0);" class="button success tiny" id="btnSaveEffort">Save Effort</a></li>
+            <li><a href="javascript:void(0);" class="button success tiny" id="btnSaveEffort" ng-click="submitEffort();">Save Effort</a></li>
             <li><a href="javascript:void(0);" class="secondary button tiny" ng-click="createCtrl.cancelEfforts()">Cancel</a></li>
         </ul>
     </div>
