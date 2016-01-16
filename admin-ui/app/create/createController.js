@@ -62,6 +62,7 @@
             $('.error-msg').addClass('hide');
             $('#divDeleteEffortbtn').addClass('hide');
             $('#divCancelModal').foundation('reveal','close');
+            $scope.successMessage = false;
         };
         $scope.submitEffort = function(){
             if(createCtrl.validateGridDataEmpty($scope.gridOptions.data)) {
@@ -99,6 +100,7 @@
             angular.forEach($scope.deleteRow, function (data, index) {
                 $scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf(data), 1);
             });
+            $scope.successMessage = false;
             $('#divDeleteEffortbtn').addClass('hide');
         };
     }]);

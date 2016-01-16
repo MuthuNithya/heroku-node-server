@@ -54,9 +54,11 @@
                             if (data[0].result[0].status === 'success') {
                                 $scope.serviceError = false;
                                 console.log('Authetication success');
-                                $cookies.put('uName',data[0].result[0].username);
-                                $cookies.put('uID',data[0].result[0].userid);
-                                $cookies.put('lStatus',true);
+                                var expireDate = new Date();
+                                expireDate.setDate(expireDate.getDate() + 1);
+                                $cookies.put('uName',data[0].result[0].username, {'expires': expireDate});
+                                $cookies.put('uID',data[0].result[0].userid, {'expires': expireDate});
+                                $cookies.put('lStatus',true, {'expires': expireDate});
                                 $state.go('dashboard');
                                 wms.getCookieData();
                             } else if (data[0].result[0].status === 'failure') {

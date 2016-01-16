@@ -28,7 +28,7 @@
                         displayName: 'From',
                         resizable: false,
                         enableHiding: false,
-                        width: '15%',
+                        width: '25%',
                         cellClass:'fromTime',
                         editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity.fromTime"/>'
                     },
@@ -37,7 +37,7 @@
                         displayName: 'To',
                         resizable: false,
                         enableHiding: false,
-                        width: '15%',
+                        width: '25%',
                         cellClass:'toTime',
                         editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity.toTime"/>'
                     },
@@ -47,7 +47,7 @@
                         resizable: false,
                         enableHiding: false,
                         type: 'string',
-                        width: '65%',
+                        width: '50%',
                         cellClass:'effortDesc'
                     }
                 ]};
