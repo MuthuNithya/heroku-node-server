@@ -30,7 +30,7 @@
         mongoInst.find({emailId: req.emailId}, function (err, items) {
             if(!assert.equal(null, err)){
                 var item = validateFindUserQueryResult(req, items);
-                if(item){
+                if(item && item._id){
                     resObj = {
                         status: "success",
                         username: item.username,
@@ -63,7 +63,7 @@
         var resObj = {};
         //duplicate check
         mongoInst.find({emailId: req.emailId}, function (err, item) {
-            if(item && item.emailId === req.emailId){
+            if(item && item.length > 0){
                 res.status(401);
                 res.json({
                     "status": "failure",

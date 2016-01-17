@@ -8,7 +8,8 @@
     var userSchema  = new mongoSchema({
         "emailId" : String,
         "password" : String,
-        "completed": Boolean
+        "completed": Boolean,
+        "username" : String
     });
 // create model if not exists.
     module.exports = mongoose.model('User',userSchema);

@@ -13,14 +13,14 @@ var auth = {
         }
 // Fire a query to your DB and check if the credentials are valid
         var dbUserObj = auth.validate(req, res);
-        if (!dbUserObj) { // If authentication fails, we send a 401 back
+        /*if (!dbUserObj) { // If authentication fails, we send a 401 back
 
         }
         if (dbUserObj) {
 // If authentication is success, we will generate a token
 // and dispatch it to the client
             //res.json(genToken(dbUserObj));
-        }
+        }*/
     },
     signup: function(req, res){
         var emailId = req.body.emailId || '';
