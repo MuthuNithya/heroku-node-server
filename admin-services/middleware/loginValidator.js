@@ -29,24 +29,22 @@
         var resObj = {};
         mongoInst.find({emailId: req.emailId}, function (err, items) {
             if(!assert.equal(null, err)){
-                if(items && items.length >0){
-                    var item = validateFindUserQueryResult(req, items);
-                        if(item){
-                            resObj = {
-                                status: "success",
-                                username: item.username,
-                                userid: item._id
-                            };
-                            resObj = genToken(resObj);
-                            console.log('step1 ',resObj);
-                        } else{
-                                //emailId is invalid
-                                resObj = {
-                                    "status": "failure",
-                                    "err_msg": "EmailId/Password is invalid"
-                                };
-                                console.log('step2 ',resObj);
-                        }
+                var item = validateFindUserQueryResult(req, items);
+                if(item){
+                    resObj = {
+                        status: "success",
+                        username: item.username,
+                        userid: item._id
+                    };
+                    resObj = genToken(resObj);
+                    console.log('step1 ',resObj);
+                } else{
+                        //emailId is invalid
+                        resObj = {
+                            "status": "failure",
+                            "err_msg": "EmailId/Password is invalid"
+                        };
+                        console.log('step2 ',resObj);
                 }
             }else if (err){
                 resObj = {
