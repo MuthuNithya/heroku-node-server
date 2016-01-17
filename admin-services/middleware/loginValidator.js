@@ -26,32 +26,40 @@
     }
     function authorizeLogin(req,res){
         var resObj = {};
-        mongoInst.find({emailId: req.emailId}, function (err, item) {
+        mongoInst.find({emailId: req.emailId}, function (err, items) {
             if(!assert.equal(null, err)){
-                if(item && item.emailId === req.emailId){
-                    console.log('item ',item);
-                    if(item.password === req.password){
-                        resObj = {
-                            status: "success",
-                            username: item.username,
-                            userid: item._id
-                        };
-                        console.log('step1 ',resObj);
-                    } else{
-                        //emailId is invalid
-                        resObj = {
-                            "status": "failure",
-                            "err_msg": "EmailId/Password is invalid"
-                        };
-                        console.log('step2 ',resObj);
+                if(items && items.length >0){
+                    var itemFound = false;
+                    for(var indx=0; indx < items.length; indx++){
+                        var item = items[indx];
+                        if(item && item.emailId === req.emailId){
+                            itemFound = true;
+                            console.log('item ',item);
+                            if(item.password === req.password){
+                                resObj = {
+                                    status: "success",
+                                    username: item.username,
+                                    userid: item._id
+                                };
+                                console.log('step1 ',resObj);
+                            }
+                            if(!itemFound){
+                                    //emailId is invalid
+                                    resObj = {
+                                        "status": "failure",
+                                        "err_msg": "EmailId/Password is invalid"
+                                    };
+                                    console.log('step2 ',resObj);
+                            }
+                        }else{
+                            //emailId is invalid
+                            resObj = {
+                                "status": "failure",
+                                "err_msg": "EmailId/Password is invalid"
+                            };
+                            console.log('step2 ',resObj);
+                        }
                     }
-                }else{
-                    //emailId is invalid
-                    resObj = {
-                        "status": "failure",
-                        "err_msg": "EmailId/Password is invalid"
-                    };
-                    console.log('step2 ',resObj);
                 }
             }else if (err){
                 resObj = {
