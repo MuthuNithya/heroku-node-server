@@ -2,6 +2,7 @@
 // Retrieve
     var assert = require('assert');
     var mongoInst =  require("../request-handler/MongoDB.js");
+    var jwt = require('jwt-simple');
     module.exports = {
         authorizeLogin:validateUser
     };
@@ -29,37 +30,23 @@
         mongoInst.find({emailId: req.emailId}, function (err, items) {
             if(!assert.equal(null, err)){
                 if(items && items.length >0){
-                    var itemFound = false;
-                    for(var indx=0; indx < items.length; indx++){
-                        var item = items[indx];
-                        if(item && item.emailId === req.emailId){
-                            itemFound = true;
-                            console.log('item ',item);
-                            if(item.password === req.password){
-                                resObj = {
-                                    status: "success",
-                                    username: item.username,
-                                    userid: item._id
-                                };
-                                console.log('step1 ',resObj);
-                            }
-                            if(!itemFound){
-                                    //emailId is invalid
-                                    resObj = {
-                                        "status": "failure",
-                                        "err_msg": "EmailId/Password is invalid"
-                                    };
-                                    console.log('step2 ',resObj);
-                            }
-                        }else{
-                            //emailId is invalid
+                    var item = validateFindUserQueryResult(req, items);
+                        if(item){
                             resObj = {
-                                "status": "failure",
-                                "err_msg": "EmailId/Password is invalid"
+                                status: "success",
+                                username: item.username,
+                                userid: item._id
                             };
-                            console.log('step2 ',resObj);
+                            resObj = genToken(resObj);
+                            console.log('step1 ',resObj);
+                        } else{
+                                //emailId is invalid
+                                resObj = {
+                                    "status": "failure",
+                                    "err_msg": "EmailId/Password is invalid"
+                                };
+                                console.log('step2 ',resObj);
                         }
-                    }
                 }
             }else if (err){
                 resObj = {
@@ -69,8 +56,8 @@
                 };
                 console.log('step3 ',resObj);
             }
-            res.status(200);
-            res.json(resObj);
+                res.status(200);
+                res.json(resObj);
         });
     }
 
@@ -107,5 +94,36 @@
                 }
             }
         });
+    }
+    // private method
+    function genToken(user) {
+        var expires = expiresIn(7); // 7 days
+        var token = jwt.encode({
+            exp: expires
+        }, require('../config/secret')());
+        return{
+            token: token,
+            expires: expires,
+            user: user
+        };
+    }
+    function expiresIn(numDays) {
+        var dateObj = new Date();
+        return dateObj.setDate(dateObj.getDate() + numDays);
+    }
+
+    function validateFindUserQueryResult(req, items) {
+        var itemFound = {};
+        if (items && items.length > 0) {
+            for (var indx = 0; indx < items.length; indx++) {
+                var item = items[indx];
+                if (item && item.emailId === req.emailId) {
+                    if (item.password === req.password) {
+                        itemFound = item;
+                    }
+                }
+            }
+        }
+        return itemFound;
     }
 })();
