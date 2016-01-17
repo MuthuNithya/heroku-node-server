@@ -8,6 +8,7 @@
             restrict:'A',
             link: function (scope, element) {
                 element.timepicker({
+                    'timeFormat': 'H:i',
                     change: function(time) {
                         // the input field
                         var element = $(this), text;
@@ -31,6 +32,8 @@
                         element.siblings().text(text);
                     }
                 });
+                element.siblings().addClass('hide');
+                element.timepicker('show');
             }
         }
     };

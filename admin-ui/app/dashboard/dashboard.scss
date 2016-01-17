@@ -1,0 +1,23 @@
+.dashboard-work-sheet {
+  .left-col {
+    width: 45%;
+    padding-left:30px;
+  }
+  .right-col {
+    width: 45%;
+    padding-top:85px;
+    canvas {
+      width: 100% !important;
+      max-width: 500px;
+      height: auto !important;
+    }
+  }
+  table{
+    margin-top:30px;
+    tr{
+      td,th{
+        border: 1px solid #333;
+      }
+    }
+  }
+}
