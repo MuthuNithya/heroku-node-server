@@ -6,12 +6,13 @@
             var deferred = $q.defer();
             $http({
                 method:'POST',
-                url:'https://heroku-node-server.herokuapp.com/auth_login',
+                url:'https://heroku-node-server.herokuapp.com/login',
+                //url:'http://localhost:3000/login',
                 data:loginDetails,
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"/*,
                 headers:{
                     'Access-Control-Allow-Origin': '*'
-                }
+                }*/
             }).success(function(data){
                 deferred.resolve(data);
             }).error(function(data){
@@ -24,12 +25,13 @@
             var deferred = $q.defer();
             $http({
                 method:'POST',
-                url:'https://heroku-node-server.herokuapp.com/auth_signup',
+                url:'https://heroku-node-server.herokuapp.com/signup',
+                //url:'http://localhost:3000/signup',
                 data:signupDet,
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"/*,
                 headers:{
                     'Access-Control-Allow-Origin': '*'
-                }
+                }*/
             }).success(function(data){
                 deferred.resolve(data);
             }).error(function(data){

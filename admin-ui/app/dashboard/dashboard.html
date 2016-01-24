@@ -1,55 +1,59 @@
-<div class="dashboard-work-sheet">
-    <div class="fl-lt left-col">
+<div class="dashboard-work-sheet row  medium-unstack">
+    <div class="columns">
         <h2>Recent Activity</h2>
         <table summary="Tables display last 7 recent activities">
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Total Hours</th>
-                <th scope="col">Status</th>
-            </tr>
-            <tr>
-                <td>01/01/2016</td>
-                <td>8</td>
-                <td>Frozen</td>
-            </tr>
-            <tr>
-                <td>01/02/2016</td>
-                <td>7</td>
-                <td>Saved</td>
-            </tr>
-            <tr>
-                <td>01/03/2016</td>
-                <td>8</td>
-                <td>Not yet completed</td>
-            </tr>
-            <tr>
-                <td>01/04/2016</td>
-                <td>6</td>
-                <td>Frozen</td>
-            </tr>
-            <tr>
-                <td>01/05/2016</td>
-                <td>8</td>
-                <td>Not yet completed</td>
-            </tr>
-            <tr>
-                <td>01/06/2016</td>
-                <td>9</td>
-                <td>Not yet completed</td>
-            </tr>
-            <tr>
-                <td>01/07/2016</td>
-                <td>8</td>
-                <td>Frozen</td>
-            </tr>
-            <!--<tr ng-repeat="item in items">
-                <td>{{item.date}}</td>
-                <td>{{item.hoursEntered}}</td>
-                <td>{{item.status}}</td>
-            </tr>-->
+            <thead>
+                <tr>
+                    <th width="100" scope="col">Date</th>
+                    <th width="50" scope="col">Total Hours</th>
+                    <th width="200" scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01/01/2016</td>
+                    <td>8</td>
+                    <td>Frozen</td>
+                </tr>
+                <tr>
+                    <td>01/02/2016</td>
+                    <td>7</td>
+                    <td>Saved</td>
+                </tr>
+                <tr>
+                    <td>01/03/2016</td>
+                    <td>8</td>
+                    <td>Not yet completed</td>
+                </tr>
+                <tr>
+                    <td>01/04/2016</td>
+                    <td>6</td>
+                    <td>Frozen</td>
+                </tr>
+                <tr>
+                    <td>01/05/2016</td>
+                    <td>8</td>
+                    <td>Not yet completed</td>
+                </tr>
+                <tr>
+                    <td>01/06/2016</td>
+                    <td>9</td>
+                    <td>Not yet completed</td>
+                </tr>
+                <tr>
+                    <td>01/07/2016</td>
+                    <td>8</td>
+                    <td>Frozen</td>
+                </tr>
+                <!--<tr ng-repeat="item in items">
+                    <td>{{item.date}}</td>
+                    <td>{{item.hoursEntered}}</td>
+                    <td>{{item.status}}</td>
+                </tr>-->
+            </tbody>
         </table>
     </div>
-    <div class="fl-lt right-col">
+    <div class="columns">
         <canvas id="bar" class="chart chart-bar"
                 chart-data="data" chart-labels="labels" chart-series="series" chart-legend="true">
         </canvas>
