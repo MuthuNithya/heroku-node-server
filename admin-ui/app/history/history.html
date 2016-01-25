@@ -1,1 +1,25 @@
-<div>History</div>
+<div data-alert class="alert-box large fa fa-exclamation-triangle page-level-error" ng-if="serviceError">
+    <i class="fi-x"></i>
+    <span>{{errorMsg}}</span>
+</div>
+
+<div class="divHistory">
+    <h2>Effort History</h2>
+
+    <div class="divHistoryFilter">
+        <div class="datepicker-header">Filter By:</div>
+        <div class="datepicker-label"><label for="fromDate">From </label></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="fromDate" id="fromDate" ng-model="selectedFromDate" readonly/></div>
+
+        <div class="datepicker-label"><label for="toDate">To </label></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="toDate" id="toDate" ng-model="selectedToDate" readonly/></div>
+        <div class="fl-lt">
+            <button  class="button alert round tiny" type="submit" ng-click="">Filter</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="divHistoryTable">
+        <div ui-grid="gridOptions" class="gridStyle"></div>
+    </div>
+</div>
