@@ -1,0 +1,31 @@
+.divHistory{
+  .divHistoryFilter{
+    input.datepicker{
+      height: 25px;
+      font-family: "abelregular";
+      font-size: 15px;
+      width: 43%;
+    }
+    .datepicker-header{
+      float:left;
+      margin-left:10px;
+      width:11%;
+      font-weight:bold;
+    }
+    .datepicker-label{
+      float:left;
+      width:5%;
+    }
+    .datepicker-input{
+      float:left;
+    }
+  }
+
+  .divHistoryTable{
+    .gridStyle {
+      border: 1px solid rgb(212,212,212);
+      width: 85%;
+    }
+  }
+
+}

@@ -37,7 +37,7 @@
                 var item = validateFindUserQueryResult(req, items);
                 if(item && item._id){
                     resObj = {
-                        status: "success",
+                        "status": "success",
                         username: item.username,
                         userid: item._id
                     };
@@ -69,10 +69,10 @@
         //duplicate check
         mongoCreateInst.find({emailId: req.emailId}, function (err, item) {
             if(item && item.length > 0){
-                res.status(401);
+                res.status(200);
                 res.json({
                     "status": "failure",
-                    "err_msg": "emailId already exists",
+                    "message": "emailId already exists",
                     "err_field": "emailId"
                 });
 

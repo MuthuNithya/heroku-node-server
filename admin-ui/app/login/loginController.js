@@ -24,15 +24,15 @@
                     var signupData = loginService.signupUser(loginCtrl.signUpData);
                     var all = $q.all([signupData]);
                     all.then(function (data) {
-                        if (data[0] && data[0].result[0]) {
-                            if (data[0].result[0].status === 'success') {
+                        if (data[0] && data[0].status) {
+                            if (data[0].status === 200) {
                                 $scope.serviceError = false;
                                 console.log('Registration success');
                                 $scope.positiveMsg = 'Registration Successful. Please login to enter.';
                                 $scope.successMessage = true;
-                            } else if (data[0].result[0].status === 'failure') {
+                            } else {
                                 $scope.serviceError = true;
-                                $scope.errorMsg = data[0].result[0].err_msg;
+                                $scope.errorMsg = data[0].message;
                             }
                         };
                         $('#loadingModal').foundation('reveal', 'close');
@@ -50,20 +50,23 @@
                     $('#loadingModal').foundation('reveal', 'open');
                     var all = $q.all([userDet]);
                     all.then(function (data) {
-                        if (data[0] && data[0].result[0]) {
-                            if (data[0].result[0].status === 'success') {
-                                $scope.serviceError = false;
-                                console.log('Authetication success');
-                                var expireDate = new Date();
-                                expireDate.setDate(expireDate.getDate() + 1);
-                                $cookies.put('uName',data[0].result[0].username, {'expires': expireDate});
-                                $cookies.put('uID',data[0].result[0].userid, {'expires': expireDate});
-                                $cookies.put('lStatus',true, {'expires': expireDate});
-                                $state.go('dashboard');
-                                wms.getCookieData();
-                            } else if (data[0].result[0].status === 'failure') {
+                        if (data[0]) {
+                            if (data[0].user) {
+                                if (data[0].user.status === 'success') {
+                                    $scope.serviceError = false;
+                                    console.log('Authetication success');
+                                    var expireDate = new Date();
+                                    expireDate.setDate(expireDate.getDate() + 1);
+                                    $cookies.put('uName', data[0].user.username, {'expires': expireDate});
+                                    $cookies.put('uID', data[0].user.userid, {'expires': expireDate});
+                                    $cookies.put('lStatus', true, {'expires': expireDate});
+                                    $cookies.put('tokenKey', data[0].token, {'expires': expireDate});
+                                    $state.go('dashboard');
+                                    wms.getCookieData();
+                                }
+                            } else if (data[0].status === 'failure') {
                                 $scope.serviceError = true;
-                                $scope.errorMsg = data[0].result[0].err_msg;
+                                $scope.errorMsg = data[0].err_msg;
                                 $cookies.remove('uName');
                                 $cookies.remove('uID');
                                 $cookies.remove('lStatus');
