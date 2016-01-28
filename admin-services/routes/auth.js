@@ -1,3 +1,4 @@
+var Q = require('q');
 var repoConnect = require('../middleware/loginValidator.js');
 var auth = {
     login: function(req, res) {
@@ -12,7 +13,7 @@ var auth = {
             return;
         }
 // Fire a query to your DB and check if the credentials are valid
-        var dbUserObj = auth.validate(req, res);
+        var dbUserObj = auth.validateLogin(req, res);
         /*if (!dbUserObj) { // If authentication fails, we send a 401 back
 
         }
@@ -34,7 +35,7 @@ var auth = {
             return;
         }
 // Fire a query to your DB and check if the credentials are valid
-        var dbUserObj = auth.validateUser(req, res);
+        var dbUserObj = auth.validateSignup(req, res);
         /*if (!dbUserObj) { // If authentication fails, we send a 401 back
 
         }
@@ -44,15 +45,24 @@ var auth = {
 
         }*/
     },
-    validate: function(req, res, callback) {
+    validateLogin: function(req, res, callback) {
 // spoofing the DB response for simplicity
-        var dbUserObj = repoConnect.authorizeLogin('login', req.body, res);
+        var dbUserObj = repoConnect.authorizeUser('login', req.body, res);
         return dbUserObj;
     },
-    validateUser: function(req, res, callback) {
+    validateSignup: function(req, res, callback) {
 // spoofing the DB response for simplicity
-        var dbUserObj = repoConnect.authorizeLogin('signup', req.body, res);
+        var dbUserObj = repoConnect.authorizeUser('signup', req.body, res);
         return dbUserObj;
+    },
+    validateUser: function(userid) {
+        // spoofing the DB response for simplicity
+        var dbUserObj = repoConnect.authorizeUser('validate', userid);
+        Q.all([dbUserObj]).then(function(data){
+            return dbUserObj;
+        },function(err){
+
+        });
     }
 };
 

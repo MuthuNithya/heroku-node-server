@@ -28,11 +28,12 @@ module.exports = function(req, res, next) {
 
             // Authorize the user to see if s/he can access our resources
 
-            var dbUser = validateUser(req, res); // The key would be the logged in user's username
+            var dbUser = validateUser(decoded.userid); // The key would be the logged in user's username
             if (dbUser) {
 
 
                 if ((req.url.indexOf('admin') >= 0 && dbUser.role == 'admin') || (req.url.indexOf('admin') < 0 && req.url.indexOf('/api/v1/') >= 0)) {
+                    req.userDetails = dbUser;
                     next(); // To move to next middleware
                 } else {
                     res.status(403);

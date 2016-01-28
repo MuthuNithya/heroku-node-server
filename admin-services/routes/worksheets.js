@@ -1,9 +1,5 @@
-var products = {
-
-    getAll: function(req, res) {
-        var allProducts = data; // Spoof a DB call
-        res.json(allProducts);
-    },
+var createWorksheets = require('../createWorksheets').create;
+var worksheets = {
 
     getOne: function(req, res) {
         var id = req.params.id;
@@ -12,9 +8,7 @@ var products = {
     },
 
     create: function(req, res) {
-        var newProduct = req.body;
-        data.push(newProduct); // Spoof a DB call
-        res.json(newProduct);
+        createWorksheets.create(req, res);
     },
 
     update: function(req, res) {
@@ -31,15 +25,4 @@ var products = {
     }
 };
 
-var data = [{
-    name: 'product 1',
-    id: '1'
-}, {
-    name: 'product 2',
-    id: '2'
-}, {
-    name: 'product 3',
-    id: '3'
-}];
-
-module.exports = products;
+module.exports = worksheets;
