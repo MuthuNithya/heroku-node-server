@@ -7,6 +7,8 @@
         $urlRouterProvider.when('/dashboard','dashboard');
         $urlRouterProvider.when('/create','create');
         $urlRouterProvider.when('/history','history');
+        $urlRouterProvider.when('/about','about');
+        $urlRouterProvider.when('/contactus','contactus');
 
         $stateProvider
             .state('home',{
@@ -45,6 +47,13 @@
                 controller: 'logoutController',
                 controllerAs: 'logoutCtrl'
             })
-
+            .state('about',{
+                url:'/about',
+                templateUrl:'app/profile/about.html'
+            })
+            .state('contactus',{
+                url:'/contactus',
+                templateUrl:'app/profile/contactus.html'
+            })
     }]);
 })();

@@ -43,7 +43,19 @@
                     $('a#ancHome').removeClass('Selected');
                     $('a#ancCreateWorksheet').addClass('Selected');
                     $('a#ancHistory').removeClass('Selected');
-                } else{
+                } else if(linkid === '#ancAbout') {
+                    $state.go('about');
+                    $('a#ancHome').removeClass('Selected');
+                    $('a#ancCreateWorksheet').removeClass('Selected');
+                    $('a#ancHistory').removeClass('Selected');
+                } else if(linkid === '#ancContactUs') {
+                    $state.go('contactus');
+                    $('a#ancHome').removeClass('Selected');
+                    $('a#ancCreateWorksheet').removeClass('Selected');
+                    $('a#ancHistory').removeClass('Selected');
+                } else if(linkid === '#ancLogin') {
+                    $state.go('login');
+                } else {
                     $state.go('history');
                     $('a#ancHome').removeClass('Selected');
                     $('a#ancCreateWorksheet').removeClass('Selected');

@@ -4,9 +4,9 @@
             <span class="header-logo fa fa-stack-overflow"></span>Work Management
         </h1>
         <ul class="inline-list fl-rt" ng-if="!wmc.currentUser.loginStatus">
-            <li><a href="javascript:void(0);">About</a></li>
+            <li><a href="javascript:void(0);" id="ancAbout" ng-click="wmc.topNavClick('#ancAbout');">About</a></li>
             <li>&#124;</li>
-            <li><a href="javascript:void(0);">Contact Us</a></li>
+            <li><a href="javascript:void(0);" id="ancContactUs" ng-click="wmc.topNavClick('#ancContactUs');">Contact Us</a></li>
         </ul>
         <ul class="inline-list fl-rt" ng-if="wmc.currentUser.loginStatus">
             <li>Hello {{wmc.currentUser.userName}}</li>
