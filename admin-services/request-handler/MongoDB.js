@@ -11,6 +11,15 @@
         "completed": Boolean,
         "username" : String
     });
+    var workSheetSchema = new mongoSchema({
+        "userId": String,
+        "workDate": Integer,
+        "workData": Arrays
+    });
+    var dbSchema = {
+        "user":  mongoose.model('User',userSchema),
+        "worksheet": mongoose.model('Worksheet', workSheetSchema)
+    };
 // create model if not exists.
-    module.exports = mongoose.model('User',userSchema);
+    module.exports = dbSchema;
 })();
