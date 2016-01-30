@@ -3,6 +3,7 @@
     var mongoWorkSheetInst = require("../request-handler/MongoDB.js").worksheet;
     var Q = require('q');
     var extend = require('extend');
+    var moment = require('moment');
     var createWorkSheets = {
         create: function (req, res) {
             if (req && req.body) {
@@ -45,7 +46,7 @@
                                 res.json({
                                     "status": "failure",
                                     "severity": "error",
-                                    "err_msg": "Worksheet for " + reqData.workDate + " already exists. Cannot create new"
+                                    "err_msg": "Worksheet for " + moment(reqData.workDate).format('MM-DD-YYYY') + " already exists. Cannot create new"
                                 });
                             }
                         });
@@ -69,15 +70,10 @@
         }
     };
 
-    function formatWorkData(data){
-        if(data && data.length >0){
-
-        }
-    }
     function validateWorkDate(_id, date) {
         var isValidDate = false;
         var deferred = Q.defer();
-        var validateDate = mongoWorkSheetInst.find({userId: _id, workDate: date}, function (err, items) {
+        var validateDate = mongoWorkSheetInst.find({userid: _id, workDate: date}, function (err, items) {
             if (assert.equal(null, err) || (items && items.length === 0)) {
                 validateDate = true;
             } else if (items && items.length > 0) {
