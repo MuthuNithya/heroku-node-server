@@ -12,9 +12,11 @@
         "username" : String
     });
     var workSheetSchema = new mongoSchema({
-        "userId": String,
-        "workDate": Integer,
-        "workData": Arrays
+        "userid": String,
+        "workDate":  Number,
+        "fromTime": Number,
+        "toTime": Number,
+        "description": String
     });
     var dbSchema = {
         "user":  mongoose.model('User',userSchema),

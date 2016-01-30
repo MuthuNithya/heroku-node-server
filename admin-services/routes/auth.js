@@ -1,3 +1,4 @@
+(function() {
 var Q = require('q');
 var repoConnect = require('../middleware/loginValidator.js');
 var auth = {
@@ -56,14 +57,12 @@ var auth = {
         return dbUserObj;
     },
     validateUser: function(userid) {
-        // spoofing the DB response for simplicity
-        var dbUserObj = repoConnect.authorizeUser('validate', userid);
-        Q.all([dbUserObj]).then(function(data){
-            return dbUserObj;
-        },function(err){
-
-        });
+        var deferred = Q.defer();
+        var dbUserObj = repoConnect.authorizeUser('authorize', userid);
+        deferred.resolve(dbUserObj);
+        return deferred.promise;
     }
 };
 
 module.exports = auth;
+})();

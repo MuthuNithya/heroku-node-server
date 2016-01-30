@@ -24,9 +24,11 @@
                     return resData;
                     break;
                 case 'authorize':
+                    var deferred = Q.defer();
                     resData = validateUserAuthorization(req);
-                    return resData;
-                break;
+                    deferred.resolve(resData);
+                    return deferred.promise;
+                    break;
             }
        // });
     }
@@ -123,11 +125,13 @@
                     if (item && item.emailId === req.emailId) {
                         if (item.password === req.password) {
                             itemFound = item;
+                            break;
                         }
                     }
                 }else if(validatorKey){
                     if (item && item[validatorKey] === req) {
                         itemFound = item;
+                        break;
                     }
                 }
             }
@@ -136,12 +140,14 @@
     }
 
     function validateUserAuthorization(userid){
-        var resObj = mongoCreateInst.find({userid: userid}, function (err, items) {
+        var deferred = Q.defer();
+        var resObj = mongoCreateInst.find({_id: userid}, function (err, items) {
             if(!assert.equal(null, err)){
-                var item = validateFindUserQueryResult(userid, items, 'userid');
-                if(item && item._id){
+                var item = validateFindUserQueryResult(userid, items, 'id');
+                if(item && item.id){
                     resObj = {
-                        "status": "success"
+                        "status": "success",
+                        "_id": item.id
                     };
                 } else{
                     //emailId is invalid
@@ -160,10 +166,8 @@
                 };
                 console.log('step3 ',resObj);
             }
+            deferred.resolve(resObj);
         });
-        var all = Q.all([resObj]);
-        all.then(function(data){
-            return data;
-        });
+        return deferred.promise;
     }
 })();

@@ -11,7 +11,7 @@ router.post('/signup', auth.signup);
 /*
  * Routes that can be accessed only by autheticated users
  */
-router.get('/api/v1/worksheets/create', worksheets.create);
+router.post('/api/v1/worksheets/create', worksheets.create);
 router.get('/api/v1/worksheets/:id', worksheets.getOne);
 router.post('/api/v1/worksheets/', worksheets.create);
 router.put('/api/v1/worksheets/:id', worksheets.update);

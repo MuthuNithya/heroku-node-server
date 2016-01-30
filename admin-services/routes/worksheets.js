@@ -1,4 +1,5 @@
-var createWorksheets = require('../createWorksheets').create;
+(function() {
+var createWorksheets = require('../createWorksheets/CreateWorksheets.js').create;
 var worksheets = {
 
     getOne: function(req, res) {
@@ -8,7 +9,7 @@ var worksheets = {
     },
 
     create: function(req, res) {
-        createWorksheets.create(req, res);
+        createWorksheets(req, res);
     },
 
     update: function(req, res) {
@@ -26,3 +27,4 @@ var worksheets = {
 };
 
 module.exports = worksheets;
+})();

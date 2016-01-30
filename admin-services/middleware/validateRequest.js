@@ -1,6 +1,7 @@
+(function() {
 var jwt = require('jwt-simple');
 var validateUser = require('../routes/auth').validateUser;
-
+var Q = require('q');
 module.exports = function(req, res, next) {
 
     // When performing a cross domain request, you will recieve
@@ -28,30 +29,40 @@ module.exports = function(req, res, next) {
 
             // Authorize the user to see if s/he can access our resources
 
-            var dbUser = validateUser(decoded.userid); // The key would be the logged in user's username
-            if (dbUser) {
+            var dbUser = Q.resolve(validateUser(decoded.userid)); // The key would be the logged in user's username
+            dbUser.then(function(data){
+                if (data && data._id && data._id === decoded.userid) {
 
 
-                if ((req.url.indexOf('admin') >= 0 && dbUser.role == 'admin') || (req.url.indexOf('admin') < 0 && req.url.indexOf('/api/v1/') >= 0)) {
-                    req.userDetails = dbUser;
-                    next(); // To move to next middleware
+                    if (req.url.indexOf('/api/v1/') >= 0) {
+                        req.userDetails = data;
+                        next(); // To move to next middleware
+                    } else {
+                        res.status(403);
+                        res.json({
+                            "status": 403,
+                            "message": "Not Authorized"
+                        });
+                        return;
+                    }
                 } else {
-                    res.status(403);
+                    // No user with this name exists, respond back with a 401
+                    res.status(401);
                     res.json({
-                        "status": 403,
-                        "message": "Not Authorized"
+                        "status": 401,
+                        "message": "Invalid User"
                     });
                     return;
                 }
-            } else {
-                // No user with this name exists, respond back with a 401
+            },function(err){
                 res.status(401);
                 res.json({
                     "status": 401,
                     "message": "Invalid User"
                 });
                 return;
-            }
+            });
+
 
         } catch (err) {
             res.status(500);
@@ -70,3 +81,4 @@ module.exports = function(req, res, next) {
         return;
     }
 };
+})();
