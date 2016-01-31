@@ -13,6 +13,7 @@
     });
     var workSheetSchema = new mongoSchema({
         "userid": String,
+        "status": String,
         "workDate":  Number,
         "workData": Array,
         "hoursLogged": Number,

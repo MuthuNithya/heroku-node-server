@@ -19,6 +19,7 @@
                                 if (workDataValid && workDataValid.isValidData && workDataValid.data) {
                                     var workDataObj = {
                                         userid: user._id,
+                                        status: reqData.status,
                                         workDate: reqData.workDate,
                                         workData: workDataValid.data,
                                         hoursLogged: workDataValid.hoursLogged,
