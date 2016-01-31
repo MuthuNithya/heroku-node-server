@@ -20,7 +20,9 @@
                                     var workDataObj = {
                                         userid: user._id,
                                         workDate: reqData.workDate,
-                                        workData: workDataValid.data
+                                        workData: workDataValid.data,
+                                        hoursLogged: workDataValid.hoursLogged,
+                                        modifiedDate: moment.utc().valueOf()
                                     };
                                     var workDataSaved = mongoWorkSheetInst(workDataObj);
                                     switch (wmTarget){
@@ -112,6 +114,7 @@
     function validateWorkData(data, _dataConfigObj) {
         var isValidData = true;
         var dataConfigObject = {};
+        var hoursLogged = 0;
         if(_dataConfigObj){
             dataConfigObject = _dataConfigObj;
         }
@@ -126,6 +129,8 @@
                         if (workData.fromTime && workData.toTime && workData.description && workData.fromTime < workData.toTime && workData.description.length > 0) {
                             if (workData.fromTime >= prevToTime) {
                                 prevToTime = workData.fromTime;
+                                var duration = workData.toTime - workData.fromTime;
+                                hoursLogged = hoursLogged + moment.duration(duration);
                                 //extend(true, data[indx], dataConfigObject);
                             } else {
                                 isValidData = false;
@@ -140,7 +145,7 @@
 
             }
         }
-        return {isValidData:isValidData, data: data};
+        return {isValidData:isValidData, data: data, hoursLogged: hoursLogged};
     }
 
     module.exports = createWorkSheets;
