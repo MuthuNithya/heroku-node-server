@@ -32,7 +32,6 @@
                         element.siblings().text(text);
                     }
                 });
-                element.siblings().addClass('hide');
                 element.timepicker('show');
             }
         }

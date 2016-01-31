@@ -12,12 +12,12 @@
     <div class="cal-sec">
         <div class="datepicker-label hide-for-small-only"><label for="datepicker">Choose Work Date</label></div>
         <div class="datepicker-label show-for-small-only"><label for="datepicker">Date</label></div>
-        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" ng-model="selectedDate" readonly/></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="datepicker" id="datepicker" ng-model="createCtrl.selectedDate" readonly/></div>
         <div class="clear"></div>
     </div>
 
-    <div class="effort-table" ng-if="selectedDate">
-        <div class="first-col">Worksheet for <b>{{selectedDate}}</b>:</div>
+    <div class="effort-table" ng-if="createCtrl.selectedDate!=''">
+        <div class="first-col">Worksheet for <b>{{createCtrl.selectedDate}}</b>:</div>
         <div class="second-col"><a class="button secondary tiny" ng-click="createCtrl.loadEffortTable();"><i class="fa fa-plus mrt-5"></i>Add Effort</a></div>
         <div class="clear"></div>
         <div class="hide" id="divDeleteEffortbtn">
@@ -39,5 +39,5 @@
             <a href="javascript:$('#divCancelModal').foundation('reveal','close');" class="secondary button round tiny">No</a>
         </div>
     </div>
-    <p>{{gridOptions.data | json}}</p>
+    <!--<p>{{gridOptions.data | json}}</p>-->
 </div>

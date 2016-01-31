@@ -1,8 +1,8 @@
 (function () {
     "use strict";
-    angular.module('workmanagement.create').factory('createService',['$cookies','$state',function($cookies,$state) {
+    angular.module('workmanagement.create').factory('createService',['$cookies','$state','$http','$q',function($cookies,$state,$http,$q) {
         var createserv = {};
-        createserv.addEffortObj = {'fromTime':'','toTime':'','description':'Enter description here....'};
+        createserv.addEffortObj = {'fromTime':'','_fromTime':'','toTime':'','_toTime':'','description':'Enter description here....'};
         createserv.initDatePicker = function(){
             $('#datepicker').datetimepicker({
                 timepicker:false,
@@ -11,6 +11,9 @@
             });
             return true;
         };
+        createserv.mapTime = function (Time) {
+
+        }
         createserv.initCreateTableGrid = function() {
             var gridOptions;
             return gridOptions = {
@@ -21,25 +24,23 @@
                 enableRowSelection: true,
                 enableSelectAll: false,
                 enableFiltering: false,
-                enableHiding: false,
+                exporterSuppressColumns : [ '_fromTime','_toTime' ],
                 columnDefs: [
                     {
-                        field: 'fromTime',
+                        field: '_fromTime',
                         displayName: 'From',
                         resizable: false,
-                        enableHiding: false,
                         width: '25%',
                         cellClass:'fromTime',
-                        editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity.fromTime"/>'
+                        editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity._fromTime" ng-change="grid.appScope.createCtrl.mapFromTime(grid.appScope.createCtrl.selectedDate,row.entity,row.entity._fromTime);"/>'
                     },
                     {
-                        field: 'toTime',
+                        field: '_toTime',
                         displayName: 'To',
                         resizable: false,
-                        enableHiding: false,
                         width: '25%',
                         cellClass:'toTime',
-                        editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity.toTime"/>'
+                        editableCellTemplate:'<input type="text" class="time" jquery-timepicker="" ng-model="row.entity._toTime" ng-change="grid.appScope.createCtrl.mapToTime(grid.appScope.createCtrl.selectedDate,row.entity,row.entity._toTime);"/>'
                     },
                     {
                         field: 'description',
@@ -47,10 +48,32 @@
                         resizable: false,
                         enableHiding: false,
                         type: 'string',
-                        width: '50%',
-                        cellClass:'effortDesc'
+                        width: '45%',
+                        cellClass:'effortDesc',
+                        editableCellTemplate:'<input type="text" class="description" ng-model="row.entity.description"/>'
                     }
                 ]};
+        };
+        createserv.saveEffort = function(workDate,workData){
+            var createEffortDate = {"workDate":workDate,"workData":workData};
+            var deferred = $q.defer();
+            $http({
+                method:'POST',
+                //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
+                url:'http://localhost:3000/api/v1/worksheets/create',
+                data:createEffortDate,
+                "Content-Type": "application/json",
+                 headers:{
+                 'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                     'wm-target': 'WM_CREATE'
+                 }
+            }).success(function(data){
+                deferred.resolve(data);
+            }).error(function(data){
+                deferred.reject(data);
+            });
+            return deferred.promise;
+
         };
         return createserv;
     }]);
