@@ -1,11 +1,10 @@
 (function() {
-var createWorksheets = require('../createWorksheets/CreateWorksheets.js').create;
+var createWorksheets = require('../WorksheetServices/CreateWorksheets.js').create;
+var fetchWorksheets = require('../WorksheetServices/FetchWorksheet.js').fetch;
 var worksheets = {
 
-    getOne: function(req, res) {
-        var id = req.params.id;
-        var product = data[0]; // Spoof a DB call
-        res.json(product);
+    fetch: function(req, res) {
+        fetchWorksheets(req, res);
     },
 
     create: function(req, res) {
