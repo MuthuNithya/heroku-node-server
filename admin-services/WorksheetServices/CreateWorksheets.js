@@ -8,13 +8,13 @@
         create: function (req, res) {
             if (req && req.body) {
                 var wmTarget = req.headers['wm-target'];
-                if (wmTarget === "WM_CREATE") {
+                if (wmTarget) {
                     var reqData = req.body;
                     var user = req.userDetails;
                     if (user && user._id && reqData.workDate) {
                         var workDateValidity = Q.resolve(validateWorkDate(user._id, reqData.workDate));
                         workDateValidity.then(function(validWorkDate){
-                            if (validWorkDate) {
+                            if (validWorkDate || (!validWorkDate && wmTarget === 'WM_UPDATE')) {
                                 var workDataValid = validateWorkData(reqData.workData, {workDate:reqData.workDate, userid:user._id});
                                 if (workDataValid && workDataValid.isValidData && workDataValid.data) {
                                     var workDataObj = {
@@ -23,21 +23,18 @@
                                         workData: workDataValid.data
                                     };
                                     var workDataSaved = mongoWorkSheetInst(workDataObj);
-                                    workDataSaved.save([workDataObj], function (err, result) {
-                                        if (!assert.equal(null, err)) {
-                                            res.status(200);
-                                            res.json({
-                                                "status": 200,
-                                                "message": "Data Saved Successfully"
+                                    switch (wmTarget){
+                                        case "WM_CREATE":
+                                            workDataSaved.save([workDataObj], function(err, result){
+                                                createUpdateCallBack(err, result, res);
                                             });
-                                        } else if (err) {
-                                            res.status(401);
-                                            res.json({
-                                                "status": 401,
-                                                "message": "Data Save Error"
+                                            break;
+                                        case "WM_UPDATE":
+                                            workDataSaved.collection.replaceOne({userid: user._id, workDate: reqData.workDate}, workDataObj, function(err, result){
+                                                createUpdateCallBack(err, result, res);
                                             });
-                                        }
-                                    });
+                                            break;
+                                    }
                                 } else {
                                     res.status(200);
                                     res.json({
@@ -74,7 +71,21 @@
             }
         }
     };
-
+    function createUpdateCallBack(err, result, res){
+        if (!assert.equal(null, err)) {
+            res.status(200);
+            res.json({
+                "status": 200,
+                "message": "Data Saved Successfully"
+            });
+        } else if (err) {
+            res.status(401);
+            res.json({
+                "status": 401,
+                "message": "Data Save Error"
+            });
+        }
+    }
     function validateWorkDate(_id, date) {
         var isValidDate = false;
         var deferred = Q.defer();
