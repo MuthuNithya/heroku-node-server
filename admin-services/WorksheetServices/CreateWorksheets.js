@@ -17,8 +17,13 @@
                             if (validWorkDate) {
                                 var workDataValid = validateWorkData(reqData.workData, {workDate:reqData.workDate, userid:user._id});
                                 if (workDataValid && workDataValid.isValidData && workDataValid.data) {
-                                    var workDataSaved = mongoWorkSheetInst();
-                                    workDataSaved.collection.insert(workDataValid.data, function (err, result) {
+                                    var workDataObj = {
+                                        userid: user._id,
+                                        workDate: reqData.workDate,
+                                        workData: workDataValid.data
+                                    };
+                                    var workDataSaved = mongoWorkSheetInst(workDataObj);
+                                    workDataSaved.save([workDataObj], function (err, result) {
                                         if (!assert.equal(null, err)) {
                                             res.status(200);
                                             res.json({
@@ -46,7 +51,7 @@
                                 res.json({
                                     "status": "failure",
                                     "severity": "error",
-                                    "err_msg": "Worksheet for " + moment(reqData.workDate).format('MM-DD-YYYY') + " already exists. Cannot create new"
+                                    "err_msg": "Worksheet for " + moment(reqData.workDate).format('MM-DD-YYYY') + " already exists."
                                 });
                             }
                         });
@@ -110,7 +115,7 @@
                         if (workData.fromTime && workData.toTime && workData.description && workData.fromTime < workData.toTime && workData.description.length > 0) {
                             if (workData.fromTime >= prevToTime) {
                                 prevToTime = workData.fromTime;
-                                extend(true, data[indx], dataConfigObject);
+                                //extend(true, data[indx], dataConfigObject);
                             } else {
                                 isValidData = false;
                             }

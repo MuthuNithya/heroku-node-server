@@ -14,9 +14,7 @@
     var workSheetSchema = new mongoSchema({
         "userid": String,
         "workDate":  Number,
-        "fromTime": Number,
-        "toTime": Number,
-        "description": String
+        "workData": Array
     });
     var dbSchema = {
         "user":  mongoose.model('User',userSchema),

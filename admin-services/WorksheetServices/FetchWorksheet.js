@@ -19,10 +19,7 @@
                                     var formatData = formatWorkData(validWorkDate.workData);
                                     res.status(200);
                                     res.json({
-                                        "results":[{
-                                            workDate: moment(reqData.workDate).format('MM-DD-YYYY'),
-                                            workData: formatData
-                                        }]
+                                        "results":formatData
                                     });
                                 }else{
                                     res.status(200);
@@ -67,12 +64,11 @@
             for(var indx=0; indx < data.length; indx++){
                 var datum = data[indx];
                 if(datum) {
-                    var dataFormat = {
-                        fromTime: datum.fromTime,
-                        toTime: datum.toTime,
-                        description: datum.description
+                    var savedWorkData = {
+                        workDate: datum.workDate,
+                        workData: datum.workData
                     };
-                    records.push(dataFormat);
+                    records.push(savedWorkData);
                 }
 
             }
