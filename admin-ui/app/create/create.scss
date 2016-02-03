@@ -1,6 +1,9 @@
 .create-work-sheet{
   padding: 20px;
-
+  .button.primary{
+    background-color: #147cc0;
+    color: #fff;
+  }
   .error-msg{
     color: red;
     margin: 10px 0;

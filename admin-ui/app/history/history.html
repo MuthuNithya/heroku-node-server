@@ -6,20 +6,24 @@
 <div class="divHistory">
     <h2>Effort History</h2>
 
-    <div class="divHistoryFilter">
+    <p ng-if="noDataError">There is no efforts entered to be displayed. Please create efforts in create worksheet section.</p>
+    <div class="divHistoryFilter" ng-if="!noDataError">
+        <div class="error" ng-if="historyCtrl.filterError">
+            {{historyCtrl.filterErrorMsg}}
+        </div>
         <div class="datepicker-header">Filter By:</div>
         <div class="datepicker-label"><label for="fromDate">From </label></div>
-        <div class="datepicker-input"><input type="text" class="datepicker" name="fromDate" id="fromDate" ng-model="selectedFromDate" readonly/></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="fromDate" id="fromDate" ng-model="historyCtrl.selectedFromDate" readonly/></div>
 
         <div class="datepicker-label"><label for="toDate">To </label></div>
-        <div class="datepicker-input"><input type="text" class="datepicker" name="toDate" id="toDate" ng-model="selectedToDate" readonly/></div>
+        <div class="datepicker-input"><input type="text" class="datepicker" name="toDate" id="toDate" ng-model="historyCtrl.selectedToDate" readonly/></div>
         <div class="fl-lt">
-            <button  class="button primary round tiny" type="submit" ng-click="">Filter</button>
+            <button  class="button primary round tiny" type="submit" ng-click="historyCtrl.filterEffort(historyCtrl.selectedFromDate,historyCtrl.selectedToDate)">Filter</button>
         </div>
         <div class="clear"></div>
     </div>
 
-    <div class="divHistoryTable">
+    <div class="divHistoryTable"ng-if="!noDataError">
         <div ui-grid="gridOptions" ui-grid-pagination class="gridStyle"></div>
     </div>
 </div>
