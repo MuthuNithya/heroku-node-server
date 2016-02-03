@@ -18,6 +18,7 @@
                                 var formatData = formatWorkData(validWorkDate.workData);
                                 res.status(200);
                                 res.json({
+                                    "status": "success",
                                     "results":formatData
                                 });
                             }else{
