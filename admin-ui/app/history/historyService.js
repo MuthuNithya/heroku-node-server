@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('workmanagement.history').factory('historyService',['$cookies','$state',function($cookies,$state) {
+    angular.module('workmanagement.history').factory('historyService',['$cookies','$state','$q','$http',function($cookies,$state,$q,$http) {
         var historyserv = {};
         historyserv.pagingOptions = {
             pageSize: 20,
@@ -22,43 +22,48 @@
         historyserv.initHistoryTableGrid = function(){
             var gridOptions;
             gridOptions= {
+                data :[],
                 paginationPageSizes: [20, 40, 60],
                 paginationPageSize: 20,
                 columnDefs: [
-                    { name: 'Date' },
-                    { name: 'TotalHoursEntered' },
-                    { name: 'Status' },
-                    { name: 'LastModifiedDate' }
+                    {
+                        name: 'workDate',
+                        displayName:'Date',
+                        cellTemplate: '<a href="javascript:void(0);" ng-click="grid.appScope.historyCtrl.showEffort(row.entity.workDate);">{{row.entity.workDate}}</a>'
+                    },
+                    { name: 'hoursLogged',
+                        displayName:'Total hours entered' },
+                    { name: 'status',
+                        displayName:'Status' },
+                    { name: 'modifiedDate',
+                        displayName:'Last modified date'}
                 ]
             }
-            gridOptions.data =[
-                {Date: "01/01/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/02/2016",TotalHoursEntered: 7,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/03/2016",TotalHoursEntered: 9,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/04/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/05/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/06/2016",TotalHoursEntered: 5,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/07/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/08/2016",TotalHoursEntered: 10,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/09/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/10/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/11/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/12/2016",TotalHoursEntered: 9,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/13/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/14/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/15/2016",TotalHoursEntered: 5,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/16/2016",TotalHoursEntered: 8,Status: "Saved", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/17/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/18/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/19/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/20/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/21/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/22/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/23/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'},
-                {Date: "01/24/2016",TotalHoursEntered: 0,Status: "Yet to complete", LastModifiedDate: '01/05/2016 14:00'}
-            ];
 
             return gridOptions;
+        };
+
+        historyserv.filterEffort=function(fromDate,toDate){
+            return true;
+        };
+
+        historyserv.HistoryEffort = function(){
+            var deferred = $q.defer();
+            $http({
+                method:'POST',
+                //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/history',
+                url:'http://localhost:3000/api/v1/worksheets/history',
+                "Content-Type": "application/json",
+                headers:{
+                    'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                    'wm-target': 'WM_AUDIT'
+                }
+            }).success(function(data){
+                deferred.resolve(data);
+            }).error(function(data){
+                deferred.reject(data);
+            });
+            return deferred.promise;
         };
         return historyserv;
     }]);

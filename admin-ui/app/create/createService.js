@@ -2,18 +2,31 @@
     "use strict";
     angular.module('workmanagement.create').factory('createService',['$cookies','$state','$http','$q',function($cookies,$state,$http,$q) {
         var createserv = {};
+        createserv.isEditable = true;
         createserv.addEffortObj = {'fromTime':'','_fromTime':'','toTime':'','_toTime':'','description':'Enter description here....'};
-        createserv.initDatePicker = function(){
-            $('#datepicker').datetimepicker({
-                timepicker:false,
-                mask:true,
-                format:'m.d.Y'
-            });
-            return true;
+        createserv.setIsEditable = function(val){
+            createserv.isEditable = val;
         };
-        createserv.mapTime = function (Time) {
-
-        }
+        createserv.fetchEffort = function(date){
+            var selectedWorkDate = {"workDate":moment.utc(date).valueOf()};
+            var deferred = $q.defer();
+            $http({
+                method:'POST',
+                //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
+                url:'http://localhost:3000/api/v1/worksheets/create',
+                data:selectedWorkDate,
+                "Content-Type": "application/json",
+                headers:{
+                    'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                    'wm-target': 'WM_VALIDATE_DATE'
+                }
+            }).success(function(data){
+                deferred.resolve(data);
+            }).error(function(data){
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        };
         createserv.initCreateTableGrid = function() {
             var gridOptions;
             return gridOptions = {
@@ -24,6 +37,9 @@
                 enableRowSelection: true,
                 enableSelectAll: false,
                 enableFiltering: false,
+                cellEditableCondition:function($scope){
+                    return !$scope.grid.appScope.isReadMode;
+                },
                 exporterSuppressColumns : [ '_fromTime','_toTime' ],
                 columnDefs: [
                     {

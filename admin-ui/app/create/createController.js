@@ -1,11 +1,46 @@
 (function() {
     "use strict";
-    angular.module('workmanagement.create').controller('createController', ['$scope', '$cookies', 'createService','$q', function ($scope, $cookies, createserv,$q) {
+    angular.module('workmanagement.create').controller('createController', ['$scope', '$cookies', 'createService','$q','uiGridConstants', function ($scope, $cookies, createserv,$q,uiGridConstants) {
         var createCtrl = this;
         $scope.deleteRow;
-        createserv.initDatePicker();
         createCtrl.selectedDate='';
+        createCtrl.existingDate=false;
         $scope.gridOptions = createserv.initCreateTableGrid();
+        createCtrl.IsEditable = true;
+        createCtrl.readOnly = false;
+        $('#datepicker').datetimepicker({
+            timepicker:false,
+            mask:true,
+            format:'m.d.Y',
+            onSelectDate:function(dp,$input){
+                $('#loadingModal').foundation('reveal', 'open');
+                var fetchEffort = createserv.fetchEffort($input.val());
+                var all = $q.all([fetchEffort]);
+                all.then(function (data) {
+                    if (data[0] && data[0].status) {
+                        if (data[0].status == 'success') {
+                            $scope.serviceError = false;
+                            $scope.successMessage = false;
+                            createCtrl.existingDate=false;
+                            $('.effort-table').focus();
+                        } else {
+                            $scope.serviceError = false;
+                            $scope.successMessage = false;
+                            createCtrl.existingDate=true;
+                            $('#dataAlreadyExist').focus()
+                        }
+                    };
+                    $('#loadingModal').foundation('reveal', 'close');
+                }, function (reject) {
+                    console.log('Registration failed');
+                    $scope.successMessage = false;
+                    $scope.errorMsg = data[0].err_msg || 'System currently unavailable. Please try again later.';
+                    $scope.serviceError = true;
+                    $('#loadingModal').foundation('reveal', 'close');
+                    $('.page-level-error').focus();
+                });
+            }
+        });
         createCtrl.loadEffortTable = function(){
             if(createCtrl.validateGridDataEmpty($scope.gridOptions.data)) {
                 $scope.gridOptions.data.push(angular.copy(createserv.addEffortObj));
@@ -88,11 +123,14 @@
                                 $scope.successMessage = true;
                                 $scope.positiveMsg = data[0].message;
                                 $('.error-msg').addClass('hide');
-                                $scope.serviceError = false;
-                                $('#btnCreateTimeSheet').removeClass('hide');
-                            } else {
                                 $scope.serviceError = true;
                                 $scope.successMessage = false;
+                                $scope.serviceError = false;
+                                $('#btnCreateTimeSheet').removeClass('hide');
+                                createserv.setIsEditable(false);
+                                $scope.isReadMode = true;
+                                $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
+                            } else {
                                 $scope.errorMsg = data[0].err_msg || data[0].message;
                             }
                         };
@@ -114,7 +152,7 @@
                 $('.error-msg span').text('Please fill all column/s in effort table before adding new effort.');
                 $('.error-msg').removeClass('hide');
             }
-        }
+        };
         $scope.gridOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
