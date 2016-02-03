@@ -12,7 +12,7 @@
                     var reqData = req.body;
                     var user = req.userDetails;
                     if (user && user._id) {
-                        var workDateValidity = Q.resolve(validateWorkDate(user._id));
+                        var workDateValidity = Q.resolve(validateWorkDate(user._id, reqData));
                         workDateValidity.then(function(validWorkDate){
                             if(validWorkDate && validWorkDate.workData && validWorkDate.workData.length > 0){
                                 var formatData = formatWorkData(validWorkDate.workData);
@@ -68,18 +68,31 @@
         return records;
     }
 
-    function validateWorkDate(_id) {
+    function validateWorkDate(_id, dateRange) {
         var deferred = Q.defer();
         var workData = [];
-        var validateDate = mongoWorkSheetInst.find({userid: _id}, function (err, items) {
-            if (assert.equal(null, err) || (items && items.length === 0)) {
-                validateDate = false;
-            } else if (items && items.length > 0) {
-                validateDate = true;
-                workData = items;
+        if(_id){
+            var queryObj = {
+                userid: _id
+            };
+            if(dateRange){
+                if(dateRange.fromDate){
+                    queryObj.workDate = {$gte:dateRange.fromDate};
+                }
+                if(dateRange.toDate){
+                    queryObj.workDate = {$lte: dateRange.toDate};
+                }
             }
-            deferred.resolve({workData: workData});
-        });
+            var validateDate = mongoWorkSheetInst.find(queryObj, function (err, items) {
+                if (assert.equal(null, err) || (items && items.length === 0)) {
+                    validateDate = false;
+                } else if (items && items.length > 0) {
+                    validateDate = true;
+                    workData = items;
+                }
+                deferred.resolve({workData: workData});
+            });
+        }
         return deferred.promise;
     }
     module.exports = auditWorkSheets;
