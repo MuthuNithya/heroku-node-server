@@ -19,6 +19,7 @@
                                     var formatData = formatWorkData(validWorkDate.workData);
                                     res.status(200);
                                     res.json({
+                                        "status": "success",
                                         "results":formatData
                                     });
                                 }else{
@@ -47,7 +48,7 @@
                         });
                     }
                 } else {
-                    res.status(200);
+                    res.status(401);
                     res.json({
                         "status": "failure",
                         "severity": "error",
