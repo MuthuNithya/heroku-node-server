@@ -15,36 +15,44 @@
                         var workDateValidity = Q.resolve(validateWorkDate(user._id, reqData.workDate));
                         workDateValidity.then(function(validWorkDate){
                             if (validWorkDate || (!validWorkDate && wmTarget === 'WM_UPDATE')) {
-                                var workDataValid = validateWorkData(reqData.workData, {workDate:reqData.workDate, userid:user._id});
-                                if (workDataValid && workDataValid.isValidData && workDataValid.data) {
-                                    var workDataObj = {
-                                        userid: user._id,
-                                        status: reqData.status,
-                                        workDate: reqData.workDate,
-                                        workData: workDataValid.data,
-                                        hoursLogged: workDataValid.hoursLogged,
-                                        modifiedDate: moment.utc().valueOf()
-                                    };
-                                    var workDataSaved = mongoWorkSheetInst(workDataObj);
-                                    switch (wmTarget){
-                                        case "WM_CREATE":
-                                            workDataSaved.save([workDataObj], function(err, result){
-                                                createUpdateCallBack(err, result, res);
-                                            });
-                                            break;
-                                        case "WM_UPDATE":
-                                            workDataSaved.collection.replaceOne({userid: user._id, workDate: reqData.workDate}, workDataObj, function(err, result){
-                                                createUpdateCallBack(err, result, res);
-                                            });
-                                            break;
-                                    }
-                                } else {
+                                if(wmTarget === 'WM_VALIDATE_DATE'){
                                     res.status(200);
                                     res.json({
-                                        "status": "failure",
-                                        "severity": "error",
-                                        "err_msg": "Worksheet has invalid data"
+                                        "status": "success",
+                                        "message": "Workdate selected is valid to create"
                                     });
+                                }else{
+                                    var workDataValid = validateWorkData(reqData.workData, {workDate:reqData.workDate, userid:user._id});
+                                    if (workDataValid && workDataValid.isValidData && workDataValid.data) {
+                                        var workDataObj = {
+                                            userid: user._id,
+                                            status: reqData.status,
+                                            workDate: reqData.workDate,
+                                            workData: workDataValid.data,
+                                            hoursLogged: workDataValid.hoursLogged,
+                                            modifiedDate: moment.utc().valueOf()
+                                        };
+                                        var workDataSaved = mongoWorkSheetInst(workDataObj);
+                                        switch (wmTarget){
+                                            case "WM_CREATE":
+                                                workDataSaved.save([workDataObj], function(err, result){
+                                                    createUpdateCallBack(err, result, res);
+                                                });
+                                                break;
+                                            case "WM_UPDATE":
+                                                workDataSaved.collection.replaceOne({userid: user._id, workDate: reqData.workDate}, workDataObj, function(err, result){
+                                                    createUpdateCallBack(err, result, res);
+                                                });
+                                                break;
+                                        }
+                                    } else {
+                                        res.status(200);
+                                        res.json({
+                                            "status": "failure",
+                                            "severity": "error",
+                                            "err_msg": "Worksheet has invalid data"
+                                        });
+                                    }
                                 }
                             } else {
                                 res.status(200);
