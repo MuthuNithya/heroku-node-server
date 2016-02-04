@@ -112,6 +112,11 @@
             $scope.successMessage = false;
             $scope.serviceError = false;
         };
+        createCtrl.enableTableEdit = function(){
+            createserv.setIsEditable(true);
+            $scope.gridOptions.enableRowSelection = true;
+            $scope.isReadMode = false;
+        };
         createCtrl.showEffort = function(date){
             if(date!=''){
                 var selectedDate = moment.utc(date).valueOf();
@@ -120,14 +125,16 @@
                 var all = $q.all([fetchEffort]);
                 all.then(function (data) {
                     if (data[0] && data[0].status) {
-                        if (data[0].status == success) {
+                        if (data[0].status == 'success') {
                             $('.error-msg').addClass('hide');
                             $scope.successMessage = false;
                             $scope.serviceError = false;
-                            $scope.gridOptions.data = data[0].results[0];
+                            createCtrl.existingDate = false;
+                            $scope.gridOptions.data = data[0].results[0].workData;
                             createserv.setIsEditable(false);
+                            $scope.gridOptions.enableRowSelection = false;
                             $scope.isReadMode = true;
-                            $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+                            //$scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
                         } else {
                             $scope.errorMsg = data[0].err_msg || data[0].message;
                             $scope.successMessage = false;

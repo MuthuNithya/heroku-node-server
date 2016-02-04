@@ -19,7 +19,10 @@
     <p  id="dataAlreadyExist" ng-if="createCtrl.existingDate && !serviceError">The Date selected is already having efforts saved. To view, Please <a href="javascript:void(0);" ng-click="createCtrl.showEffort(createCtrl.selectedDate);">click here</a></p>
     <div class="effort-table" ng-if="createCtrl.existingDate===false && !serviceError && createCtrl.selectedDate!=''">
         <div class="first-col">Worksheet for <b>{{createCtrl.selectedDate}}</b>:</div>
-        <div class="second-col"><a class="button secondary tiny" ng-click="createCtrl.loadEffortTable();"><i class="fa fa-plus mrt-5"></i>Add Effort</a></div>
+        <div class="second-col">
+            <a class="button secondary tiny" ng-click="createCtrl.loadEffortTable();" ng-if="!isReadMode"><i class="fa fa-plus mrt-5"></i>Add Effort</a>
+            <a class="button secondary tiny" ng-click="createCtrl.enableTableEdit();" ng-if="isReadMode">Edit</a>
+        </div>
         <div class="clear"></div>
         <div class="hide" id="divDeleteEffortbtn">
             <a class="button alert tiny" ng-click="createCtrl.deleteRows();">Delete</a>
