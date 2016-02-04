@@ -16,8 +16,8 @@
         <div class="clear"></div>
     </div>
 
-    <p  id="dataAlreadyExist" ng-if="createCtrl.existingDate && !serviceError">The Date selected is already having efforts saved. To view, Please <a href="javascript:void(0);">click here</a></p>
-    <div class="effort-table" ng-if="createCtrl.existingDate===false && !serviceError">
+    <p  id="dataAlreadyExist" ng-if="createCtrl.existingDate && !serviceError">The Date selected is already having efforts saved. To view, Please <a href="javascript:void(0);" ng-click="createCtrl.showEffort(createCtrl.selectedDate);">click here</a></p>
+    <div class="effort-table" ng-if="createCtrl.existingDate===false && !serviceError && createCtrl.selectedDate!=''">
         <div class="first-col">Worksheet for <b>{{createCtrl.selectedDate}}</b>:</div>
         <div class="second-col"><a class="button secondary tiny" ng-click="createCtrl.loadEffortTable();"><i class="fa fa-plus mrt-5"></i>Add Effort</a></div>
         <div class="clear"></div>
@@ -28,8 +28,9 @@
             <i class="fa fa-exclamation-triangle"></i> <span></span>
         </div>
         <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellNav ui-grid-selection class="grid" ng-if="gridOptions.data.length"></div>
-        <ul id="btnCreateTimeSheet" class="stack-for-small round secondary button-group hide" ng-hide="!gridOptions.data.length">
-            <li><a href="javascript:void(0);" class="button primary tiny" id="btnSaveEffort" ng-click="submitEffort();">Save Effort</a></li>
+        <ul id="btnCreateTimeSheet" class="stack-for-small round button-group hide" ng-hide="!gridOptions.data.length">
+            <li><a href="javascript:void(0);" class="button success tiny" id="btnFreezeEffort" ng-click="submitEffort('Freeze');">Freeze Effort</a></li>
+            <li><a href="javascript:void(0);" class="button primary tiny" id="btnSaveEffort" ng-click="submitEffort('Save');">Save Effort</a></li>
             <li><a href="javascript:void(0);" class="secondary button tiny" ng-click="createCtrl.cancelEfforts()">Cancel</a></li>
         </ul>
     </div>

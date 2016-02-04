@@ -23,6 +23,7 @@
                             $scope.successMessage = false;
                             createCtrl.existingDate=false;
                             $('.effort-table').focus();
+                            $scope.gridOptions.data=[];
                         } else {
                             $scope.serviceError = false;
                             $scope.successMessage = false;
@@ -111,44 +112,108 @@
             $scope.successMessage = false;
             $scope.serviceError = false;
         };
-        $scope.submitEffort = function(){
-            if(createCtrl.validateGridDataEmpty($scope.gridOptions.data)) {
-                if(createCtrl.validateEffortData($scope.gridOptions.data)){
-                    $('#loadingModal').foundation('reveal', 'open');
-                    var createEffort = createserv.saveEffort(moment.utc(createCtrl.selectedDate).valueOf(),$scope.gridOptions.data);
-                    var all = $q.all([createEffort]);
-                    all.then(function (data) {
-                        if (data[0] && data[0].status) {
-                            if (data[0].status == 200) {
-                                $scope.successMessage = true;
-                                $scope.positiveMsg = data[0].message;
-                                $('.error-msg').addClass('hide');
-                                $scope.serviceError = true;
-                                $scope.successMessage = false;
-                                $scope.serviceError = false;
-                                $('#btnCreateTimeSheet').removeClass('hide');
-                                createserv.setIsEditable(false);
-                                $scope.isReadMode = true;
-                                $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
-                            } else {
-                                $scope.errorMsg = data[0].err_msg || data[0].message;
-                            }
-                        };
-                        $('#loadingModal').foundation('reveal', 'close');
-                    }, function (reject) {
-                        console.log('Registration failed');
-                        $scope.successMessage = false;
-                        $scope.errorMsg = 'System currently unavailable. Please try again later.';
-                        $scope.serviceError = true;
-                        $('#loadingModal').foundation('reveal', 'close');
-                    });
-                } else{
+        createCtrl.showEffort = function(date){
+            if(date!=''){
+                var selectedDate = moment.utc(date).valueOf();
+                $('#loadingModal').foundation('reveal', 'open');
+                var fetchEffort = createserv.fetchData(selectedDate);
+                var all = $q.all([fetchEffort]);
+                all.then(function (data) {
+                    if (data[0] && data[0].status) {
+                        if (data[0].status == success) {
+                            $('.error-msg').addClass('hide');
+                            $scope.successMessage = false;
+                            $scope.serviceError = false;
+                            $scope.gridOptions.data = data[0].results[0];
+                            createserv.setIsEditable(false);
+                            $scope.isReadMode = true;
+                            $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+                        } else {
+                            $scope.errorMsg = data[0].err_msg || data[0].message;
+                            $scope.successMessage = false;
+                            $scope.serviceError = true;
+                        }
+                    };
+                    $('#loadingModal').foundation('reveal', 'close');
+                }, function (reject) {
+                    console.log('Registration failed');
                     $scope.successMessage = false;
-                    $('.error-msg span').text('Please correct from time and to time entered in all column/s.');
-                    $('.error-msg').removeClass('hide');
+                    $scope.errorMsg = 'System currently unavailable. Please try again later.';
+                    $scope.serviceError = true;
+                    $('#loadingModal').foundation('reveal', 'close');
+                });
+            }
+        };
+        $scope.submitEffort = function(parameter){
+            if(createCtrl.validateGridDataEmpty($scope.gridOptions.data)) {
+                if(createCtrl.validateEffortData($scope.gridOptions.data)) {
+                    $('#loadingModal').foundation('reveal', 'open');
+                    if (parameter === 'Save') {
+                        var createEffort = createserv.saveEffort(moment.utc(createCtrl.selectedDate).valueOf(), $scope.gridOptions.data);
+                        var all = $q.all([createEffort]);
+                        all.then(function (data) {
+                            if (data[0] && data[0].status) {
+                                if (data[0].status == 200) {
+                                    $scope.positiveMsg = data[0].message;
+                                    $('.error-msg').addClass('hide');
+                                    $scope.successMessage = true;
+                                    $scope.serviceError = false;
+                                    $('#btnCreateTimeSheet').removeClass('hide');
+                                    /*createserv.setIsEditable(false);
+                                    $scope.isReadMode = true;
+                                    $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);*/
+                                } else {
+                                    $scope.errorMsg = data[0].err_msg || data[0].message;
+                                    $scope.successMessage = false;
+                                    $scope.serviceError = true;
+                                }
+                            };
+                            $('#loadingModal').foundation('reveal', 'close');
+                        }, function (reject) {
+                            console.log('Registration failed');
+                            $scope.successMessage = false;
+                            $scope.errorMsg = 'System currently unavailable. Please try again later.';
+                            $scope.serviceError = true;
+                            $('#loadingModal').foundation('reveal', 'close');
+                        });
+                    } else{
+                        var createEffort = createserv.freezeEffort(moment.utc(createCtrl.selectedDate).valueOf(), $scope.gridOptions.data);
+                        var all = $q.all([createEffort]);
+                        all.then(function (data) {
+                            if (data[0] && data[0].status) {
+                                if (data[0].status == 200) {
+                                    $scope.positiveMsg = 'Data frozen successfully';
+                                    $('.error-msg').addClass('hide');
+                                    $scope.successMessage = true;
+                                    $scope.serviceError = false;
+                                    $('#btnCreateTimeSheet').removeClass('hide');
+                                    /*createserv.setIsEditable(false);
+                                    $scope.isReadMode = true;
+                                    $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);*/
+                                } else {
+                                    $scope.errorMsg = data[0].err_msg || data[0].message;
+                                    $scope.serviceError = true;
+                                    $scope.successMessage = false;
+                                }
+                            };
+                            $('#loadingModal').foundation('reveal', 'close');
+                        }, function (reject) {
+                            console.log('Registration failed');
+                            $scope.successMessage = false;
+                            $scope.errorMsg = 'System currently unavailable. Please try again later.';
+                            $scope.serviceError = true;
+                            $('#loadingModal').foundation('reveal', 'close');
+                        });
+                    }
+                } else {
+                        $scope.successMessage = false;
+                        $scope.serviceError = false;
+                        $('.error-msg span').text('Please correct from time and to time entered in all column/s.');
+                        $('.error-msg').removeClass('hide');
                 }
             } else{
                 $scope.successMessage = false;
+                $scope.serviceError = false;
                 $('.error-msg span').text('Please fill all column/s in effort table before adding new effort.');
                 $('.error-msg').removeClass('hide');
             }
