@@ -2,12 +2,10 @@
     "use strict";
     angular.module('workmanagement.history').controller('historyController', ['$scope', '$cookies', 'historyService','$q', function ($scope, $cookies, historyserv,$q) {
         var historyCtrl = this;
-        historyserv.initDatePicker();
-        $scope.noDataError = false;
-        historyCtrl.selectedFromDate = '';
-        historyCtrl.selectedToDate = '';
         historyCtrl.filterError = false;
         historyCtrl.filterErrorMsg = '';
+        $scope.noDataError = false;
+        historyserv.initDatePicker();
         $scope.gridOptions = historyserv.initHistoryTableGrid();
         historyCtrl.showEffort = function(date){
             alert(date);

@@ -3,6 +3,7 @@
     angular.module('workmanagement.create').factory('createService',['$cookies','$state','$http','$q',function($cookies,$state,$http,$q) {
         var createserv = {};
         createserv.isEditable = true;
+        createserv.isupdate = false;
         createserv.addEffortObj = {'fromTime':'','_fromTime':'','toTime':'','_toTime':'','description':'Enter description here....'};
         createserv.setIsEditable = function(val){
             createserv.isEditable = val;
@@ -93,44 +94,83 @@
         createserv.saveEffort = function(workDate,workData){
             var createEffortDate = {"status":"saved","workDate":workDate,"workData":workData};
             var deferred = $q.defer();
-            $http({
-                method:'POST',
-                //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
-                url:'http://localhost:3000/api/v1/worksheets/create',
-                data:createEffortDate,
-                "Content-Type": "application/json",
-                 headers:{
-                 'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
-                     'wm-target': 'WM_CREATE'
-                 }
-            }).success(function(data){
-                deferred.resolve(data);
-            }).error(function(data){
-                deferred.reject(data);
-            });
-            return deferred.promise;
+            if(!createserv.isupdate) {
+                $http({
+                    method: 'POST',
+                    //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
+                    url: 'http://localhost:3000/api/v1/worksheets/create',
+                    data: createEffortDate,
+                    "Content-Type": "application/json",
+                    headers: {
+                        'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                        'wm-target': 'WM_CREATE'
+                    }
+                }).success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (data) {
+                    deferred.reject(data);
+                });
+                return deferred.promise;
+            } else{
+                createserv.isupdate = false;
+                $http({
+                    method: 'POST',
+                    //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
+                    url: 'http://localhost:3000/api/v1/worksheets/create',
+                    data: createEffortDate,
+                    "Content-Type": "application/json",
+                    headers: {
+                        'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                        'wm-target': 'WM_UPDATE'
+                    }
+                }).success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (data) {
+                    deferred.reject(data);
+                });
+                return deferred.promise;
+            }
 
         };
         createserv.freezeEffort = function(workDate,workData){
             var createEffortDate = {"status":"frozen","workDate":workDate,"workData":workData};
             var deferred = $q.defer();
-            $http({
-                method:'POST',
-                //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
-                url:'http://localhost:3000/api/v1/worksheets/create',
-                data:createEffortDate,
-                "Content-Type": "application/json",
-                headers:{
-                    'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
-                    'wm-target': 'WM_CREATE'
-                }
-            }).success(function(data){
-                deferred.resolve(data);
-            }).error(function(data){
-                deferred.reject(data);
-            });
-            return deferred.promise;
-
+            if(!createserv.isupdate) {
+                $http({
+                    method: 'POST',
+                    //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
+                    url: 'http://localhost:3000/api/v1/worksheets/create',
+                    data: createEffortDate,
+                    "Content-Type": "application/json",
+                    headers: {
+                        'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                        'wm-target': 'WM_CREATE'
+                    }
+                }).success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (data) {
+                    deferred.reject(data);
+                });
+                return deferred.promise;
+            } else{
+                createserv.isupdate = false;
+                $http({
+                    method: 'POST',
+                    //url:'https://heroku-node-server.herokuapp.com/api/v1/worksheets/create',
+                    url: 'http://localhost:3000/api/v1/worksheets/create',
+                    data: createEffortDate,
+                    "Content-Type": "application/json",
+                    headers: {
+                        'X-ACCESS-TOKEN': $cookies.get('tokenKey'),
+                        'wm-target': 'WM_UPDATE'
+                    }
+                }).success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (data) {
+                    deferred.reject(data);
+                });
+                return deferred.promise;
+            }
         };
         return createserv;
     }]);
