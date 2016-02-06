@@ -7,7 +7,7 @@
     <h2>Effort History</h2>
 
     <p ng-if="noDataError">There is no efforts entered to be displayed. Please create efforts in create worksheet section.</p>
-    <div class="divHistoryFilter" ng-if="!noDataError">
+    <div class="divHistoryFilter" ng-hide="noDataError">
         <div class="error" ng-if="historyCtrl.filterError">
             {{historyCtrl.filterErrorMsg}}
         </div>

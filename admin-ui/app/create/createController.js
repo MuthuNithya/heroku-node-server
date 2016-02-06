@@ -6,6 +6,18 @@
         createCtrl.selectedDate='';
         createCtrl.existingDate=false;
         $scope.gridOptions = createserv.initCreateTableGrid();
+        $scope.gridOptions.onRegisterApi = function (gridApi) {
+            $scope.gridApi = gridApi;
+            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                $scope.deleteRow = gridApi.selection.getSelectedRows();
+                $scope.successMessage = false;
+                if($scope.deleteRow.length>0 && !$scope.isReadMode){
+                    $('#divDeleteEffortbtn').removeClass('hide');
+                } else{
+                    $('#divDeleteEffortbtn').addClass('hide');
+                }
+            });
+        };
         createCtrl.IsEditable = true;
         createCtrl.readOnly = false;
         $('#datepicker').datetimepicker({
@@ -24,11 +36,13 @@
                             createCtrl.existingDate=false;
                             $('.effort-table').focus();
                             $scope.gridOptions.data=[];
+                            $scope.isReadMode = false;
                         } else {
                             $scope.serviceError = false;
                             $scope.successMessage = false;
                             createCtrl.existingDate=true;
-                            $('#dataAlreadyExist').focus()
+                            $('#dataAlreadyExist').focus();
+                            $scope.isReadMode = false;
                         }
                     };
                     $('#loadingModal').foundation('reveal', 'close');
@@ -39,6 +53,7 @@
                     $scope.serviceError = true;
                     $('#loadingModal').foundation('reveal', 'close');
                     $('.page-level-error').focus();
+                    $scope.isReadMode = false;
                 });
             }
         });
@@ -111,6 +126,14 @@
             $('#divCancelModal').foundation('reveal','close');
             $scope.successMessage = false;
             $scope.serviceError = false;
+            createserv.isupdate = false;
+        };
+        createCtrl.enableTableEdit = function(){
+            createserv.setIsEditable(true);
+            $scope.gridOptions.enableRowSelection = true;
+            $scope.isReadMode = false;
+            $('#btnCreateTimeSheet').removeClass('hide');
+            createserv.isupdate = true;
         };
         createCtrl.showEffort = function(date){
             if(date!=''){
@@ -120,14 +143,16 @@
                 var all = $q.all([fetchEffort]);
                 all.then(function (data) {
                     if (data[0] && data[0].status) {
-                        if (data[0].status == success) {
+                        if (data[0].status == 'success') {
                             $('.error-msg').addClass('hide');
                             $scope.successMessage = false;
                             $scope.serviceError = false;
-                            $scope.gridOptions.data = data[0].results[0];
+                            createCtrl.existingDate = false;
+                            $scope.gridOptions.data = data[0].results[0].workData;
                             createserv.setIsEditable(false);
+                            $scope.gridOptions.enableRowSelection = false;
                             $scope.isReadMode = true;
-                            $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+                            //$scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
                         } else {
                             $scope.errorMsg = data[0].err_msg || data[0].message;
                             $scope.successMessage = false;
@@ -217,18 +242,6 @@
                 $('.error-msg span').text('Please fill all column/s in effort table before adding new effort.');
                 $('.error-msg').removeClass('hide');
             }
-        };
-        $scope.gridOptions.onRegisterApi = function (gridApi) {
-            $scope.gridApi = gridApi;
-            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                $scope.deleteRow = gridApi.selection.getSelectedRows();
-                $scope.successMessage = false;
-                if($scope.deleteRow.length>0){
-                    $('#divDeleteEffortbtn').removeClass('hide');
-                } else{
-                    $('#divDeleteEffortbtn').addClass('hide');
-                }
-            });
         };
         createCtrl.deleteRows = function(){
             angular.forEach($scope.deleteRow, function (data, index) {
