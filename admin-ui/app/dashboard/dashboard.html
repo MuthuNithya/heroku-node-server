@@ -1,59 +1,35 @@
 <div class="dashboard-work-sheet row  medium-unstack">
+    <div data-alert class="alert-box large fa fa-exclamation-triangle page-level-error" ng-if="serviceError">
+        <i class="fi-x"></i>
+        <span>{{errorMsg}}</span>
+    </div>
+    <div data-alert class="alert-box success positive-message" ng-if="successMessage">
+        <i class="fa fa-check-square-o"></i>
+        <span>{{positiveMsg}}</span>
+    </div>
     <div class="columns">
         <h2>Recent Activity</h2>
-        <table summary="Tables display last 7 recent activities">
+        <p ng-if="noDataRet"> There is no activity to show here. Please create worksheet to view.</p>
+        <table summary="Tables display last 7 recent activities" ng-if="!serviceError && !noDataRet">
             <thead>
                 <tr>
                     <th width="100" scope="col">Date</th>
                     <th width="50" scope="col">Total Hours</th>
-                    <th width="200" scope="col">Status</th>
+                    <th width="100" scope="col">Status</th>
+                    <th width="200" scope="col">Last modified date</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>01/01/2016</td>
-                    <td>8</td>
-                    <td>Frozen</td>
+                <tr ng-repeat="data in recentActivity">
+                    <td>{{data.workDate}}</td>
+                    <td>{{data.hoursLogged}}</td>
+                    <td>{{data.status}}</td>
+                    <td>{{data.modifiedDate}}</td>
                 </tr>
-                <tr>
-                    <td>01/02/2016</td>
-                    <td>7</td>
-                    <td>Saved</td>
-                </tr>
-                <tr>
-                    <td>01/03/2016</td>
-                    <td>8</td>
-                    <td>Not yet completed</td>
-                </tr>
-                <tr>
-                    <td>01/04/2016</td>
-                    <td>6</td>
-                    <td>Frozen</td>
-                </tr>
-                <tr>
-                    <td>01/05/2016</td>
-                    <td>8</td>
-                    <td>Not yet completed</td>
-                </tr>
-                <tr>
-                    <td>01/06/2016</td>
-                    <td>9</td>
-                    <td>Not yet completed</td>
-                </tr>
-                <tr>
-                    <td>01/07/2016</td>
-                    <td>8</td>
-                    <td>Frozen</td>
-                </tr>
-                <!--<tr ng-repeat="item in items">
-                    <td>{{item.date}}</td>
-                    <td>{{item.hoursEntered}}</td>
-                    <td>{{item.status}}</td>
-                </tr>-->
             </tbody>
         </table>
     </div>
-    <div class="columns">
+    <div class="columns" ng-if="!serviceError && !noDataRet">
         <canvas id="bar" class="chart chart-bar"
                 chart-data="data" chart-labels="labels" chart-series="series" chart-legend="true">
         </canvas>
