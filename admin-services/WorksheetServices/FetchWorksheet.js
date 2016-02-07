@@ -67,6 +67,7 @@
                 if(datum) {
                     var savedWorkData = {
                         workDate: datum.workDate,
+                        status: datum.status,
                         workData: datum.workData
                     };
                     records.push(savedWorkData);

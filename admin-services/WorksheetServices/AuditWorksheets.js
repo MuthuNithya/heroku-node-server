@@ -89,6 +89,9 @@
                 }
 
             }
+            records.sort(function(a, b){
+               return a.workDate < b.workDate;
+            });
         }
         return records;
     }
