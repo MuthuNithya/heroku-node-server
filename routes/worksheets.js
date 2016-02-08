@@ -1,7 +1,7 @@
 (function() {
 var createWorksheets = require('../WorksheetServices/CreateWorksheets.js').create;
 var fetchWorksheets = require('../WorksheetServices/FetchWorksheet.js').fetch;
-var auditWorkSheets = require('../WorkSheetServices/AuditWorksheets.js').audit;
+var auditWorkSheets = require('../WorksheetServices/AuditWorksheets.js').audit;
 var worksheets = {
 
     fetch: function(req, res) {
