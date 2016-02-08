@@ -103,12 +103,13 @@
             var queryObj = {
                 userid: _id
             };
-            if(dateRange){
+            if(dateRange && dateRange.fromDate && dateRange.toDate){
+                queryObj.workDate = {};
                 if(dateRange.fromDate){
-                    queryObj.workDate = {$gte:dateRange.fromDate};
+                    queryObj.workDate.$gte = dateRange.fromDate;
                 }
                 if(dateRange.toDate){
-                    queryObj.workDate = {$lte: dateRange.toDate};
+                    queryObj.workDate.$lte = dateRange.toDate;
                 }
             }
             var validateDate = mongoWorkSheetInst.find(queryObj, function (err, items) {
