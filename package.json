@@ -19,7 +19,7 @@
     "istanbul": "^1.0.0-alpha",
     "jwt-simple": "^0.2.0",
     "mocha": "~2.4.5",
-    "mocha-phantomjs": "~4.0.2",
+    "mocha-phantomjs": "~4.0.0",
     "moment": "~2.4.0",
     "mongodb": "~2.0.42",
     "mongoose": "~4.1.12",
