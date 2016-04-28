@@ -7,7 +7,6 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(require('prerender-node'));
 
 app.all('/*', function(req, res, next) {
     // CORS headers
