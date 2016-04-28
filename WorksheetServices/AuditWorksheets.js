@@ -1,6 +1,6 @@
 (function() {
     var assert = require('assert');
-    var mongoWorkSheetInst = require("../request-handler/MongoDB.js").worksheet;
+    var auditWorkSheetInst = require("../request-handler/MongoDB.js").auditWorksheet;
     var Q = require('q');
     var extend = require('extend');
     var moment = require('moment');
@@ -83,7 +83,9 @@
                         workDate: datum.workDate,
                         status: datum.status,
                         hoursLogged: moment.duration(datum.hoursLogged).asHours(),
-                        modifiedDate: datum.modifiedDate
+                        modifiedDate: datum.modifiedDate,
+                        isLatest: datum.isLatest,
+                        version: datum.version
                     };
                     records.push(savedWorkData);
                 }
@@ -112,7 +114,7 @@
                     queryObj.workDate.$lte = dateRange.toDate;
                 }
             }
-            var validateDate = mongoWorkSheetInst.find(queryObj, function (err, items) {
+            var validateDate = auditWorkSheetInst.find(queryObj, function (err, items) {
                 if (assert.equal(null, err) || (items && items.length === 0)) {
                     validateDate = false;
                 } else if (items && items.length > 0) {
@@ -130,10 +132,9 @@
         var workData = [];
         if(_id){
             var queryOptions = {
-                sort: ['workDate', 'desc'],
-                limit: 7
+                sort: ['workDate', 'desc']
             };
-            var validateDate = mongoWorkSheetInst.collection.find({userid: _id}, queryOptions).toArray(function (err, items) {
+            var validateDate = auditWorkSheetInst.collection.find({userid: _id, isLatest: true}, queryOptions).toArray(function (err, items) {
                 if (assert.equal(null, err) || (items && items.length === 0)) {
                     validateDate = false;
                 } else if (items && items.length > 0) {

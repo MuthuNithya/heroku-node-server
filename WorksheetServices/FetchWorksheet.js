@@ -68,7 +68,9 @@
                     var savedWorkData = {
                         workDate: datum.workDate,
                         status: datum.status,
-                        workData: datum.workData
+                        workData: datum.workData,
+                        isLatest: datum.isLatest,
+                        version: datum.version
                     };
                     records.push(savedWorkData);
                 }
@@ -80,7 +82,7 @@
     function validateWorkDate(_id, date) {
         var deferred = Q.defer();
         var workData = [];
-        var validateDate = mongoWorkSheetInst.find({userid: _id, workDate: date}, function (err, items) {
+        var validateDate = mongoWorkSheetInst.find({userid: _id, workDate: date, isLatest: true}, function (err, items) {
             if (assert.equal(null, err) || (items && items.length === 0)) {
                 validateDate = false;
             } else if (items && items.length > 0) {

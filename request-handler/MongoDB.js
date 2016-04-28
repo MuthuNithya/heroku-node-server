@@ -17,11 +17,23 @@
         "workDate":  Number,
         "workData": Array,
         "hoursLogged": Number,
-        "modifiedDate": Number
+        "modifiedDate": Number,
+        "version": Number,
+        "isLatest": Boolean
+    });
+    var auditWorkSheetSchema = new mongoSchema({
+        "userid": String,
+        "status": String,
+        "workDate":  Number,
+        "hoursLogged": Number,
+        "modifiedDate": Number,
+        "version": Number,
+        "isLatest": Boolean
     });
     var dbSchema = {
         "user":  mongoose.model('User',userSchema),
-        "worksheet": mongoose.model('Worksheet', workSheetSchema)
+        "worksheet": mongoose.model('Worksheet', workSheetSchema),
+        "auditWorksheet": mongoose.model('AuditWorksheet', auditWorkSheetSchema)
     };
 // create model if not exists.
     module.exports = dbSchema;

@@ -28,14 +28,12 @@
         autoAcceptConnections: false
     });
     wss.on('connection', function(ws) {
-      console.log("New connection");
       ws.on('message', function(message) {
         ws.send("Received: " + message);
       });
       ws.send('Welcome!');
     });
-    console.log(" on " + server_ip_address + ", server_port " + server_port)
     server.listen(server_port, server_ip_address, function(){
-      console.log("Listening on " + server_ip_address + ", server_port " + server_port)
+        console.log("Listening on " + server_ip_address + ", server_port " + server_port);
     });
 })();

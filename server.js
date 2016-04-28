@@ -7,14 +7,13 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(require('prerender-node'));
 
 app.all('/*', function(req, res, next) {
     // CORS headers
     res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     // Set custom headers for CORS
-    res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key,wm-target,Access-Control-Allow-Origin');
+    res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key,wm-target');
     if (req.method == 'OPTIONS') {
         res.status(200).end();
     } else {
@@ -38,7 +37,7 @@ app.use(function(req, res, next) {
 });
 
 // Start the server
-app.set('port', process.env.PORT || 3000);
+app.set('port', 8000);
 
 var server = app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + server.address().port);

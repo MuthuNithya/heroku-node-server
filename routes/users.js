@@ -30,14 +30,4 @@ var users = {
         res.json(true);
     }
 };
-var data = [{
-    name: 'user 1',
-    id: '1'
-}, {
-    name: 'user 2',
-    id: '2'
-}, {
-    name: 'user 3',
-    id: '3'
-}];
 module.exports = users;

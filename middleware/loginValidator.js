@@ -9,28 +9,19 @@
     };
     function authorizeUser(mode, req, res){
         var resData;
-        /*MongoClient.connect("mongodb://MuthuNithya:862014@ds033143.mongolab.com:33143/dreamlion", function (err, db) {
-            if (!err) {
-                console.log("We are connected");
-            }
-            var collection = db.collection("master_userlist");*/
-            switch (mode){
-                case 'login':
-                    resData = authorizeLogin(req,res);
-                    return resData;
-                    break;
-                case 'signup':
-                    resData = createUser(req,res);
-                    return resData;
-                    break;
-                case 'authorize':
-                    var deferred = Q.defer();
-                    resData = validateUserAuthorization(req);
-                    deferred.resolve(resData);
-                    return deferred.promise;
-                    break;
-            }
-       // });
+        switch (mode){
+            case 'login':
+                resData = authorizeLogin(req,res);
+                return resData;
+            case 'signup':
+                resData = createUser(req,res);
+                return resData;
+            case 'authorize':
+                var deferred = Q.defer();
+                resData = validateUserAuthorization(req);
+                deferred.resolve(resData);
+                return deferred.promise;
+        }
     }
     function authorizeLogin(req,res){
         var resObj = {};
@@ -44,14 +35,11 @@
                         userid: item._id
                     };
                     resObj = genToken(resObj);
-                    console.log('step1 ',resObj);
                 } else{
-                        //emailId is invalid
-                        resObj = {
-                            "status": "failure",
-                            "err_msg": "EmailId/Password is invalid"
-                        };
-                        console.log('step2 ',resObj);
+                    resObj = {
+                        "status": "failure",
+                        "err_msg": "EmailId/Password is invalid"
+                    };
                 }
             }else if (err){
                 resObj = {
@@ -59,7 +47,6 @@
                     "err_msg": "Unexpected Service Failure",
                     "err_field": "login"
                 };
-                console.log('step3 ',resObj);
             }
             res.status(200);
             res.json(resObj);
@@ -156,7 +143,6 @@
                         "severity": "error",
                         "err_msg": "Invalid Request"
                     };
-                    console.log('step2 ',resObj);
                 }
             }else if (err){
                 resObj = {
@@ -164,7 +150,6 @@
                     "severity": "error",
                     "err_msg": "Unexpected Service Failure"
                 };
-                console.log('step3 ',resObj);
             }
             deferred.resolve(resObj);
         });

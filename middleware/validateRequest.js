@@ -16,7 +16,7 @@ module.exports = function(req, res, next) {
 
     if (token || key) {
         try {
-            var decoded = jwt.decode(token, require('../config/secret.js')());
+            var decoded = jwt.decode(token || key, require('../config/secret.js')());
 
             if (decoded.exp <= Date.now()) {
                 res.status(400);
@@ -32,8 +32,6 @@ module.exports = function(req, res, next) {
             var dbUser = Q.resolve(validateUser(decoded.userid)); // The key would be the logged in user's username
             dbUser.then(function(data){
                 if (data && data._id && data._id === decoded.userid) {
-
-
                     if (req.url.indexOf('/api/v1/') >= 0) {
                         req.userDetails = data;
                         next(); // To move to next middleware

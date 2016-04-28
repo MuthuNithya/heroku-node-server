@@ -14,19 +14,6 @@ var worksheets = {
 
     audit: function(req, res){
         auditWorkSheets(req, res);
-    },
-
-    update: function(req, res) {
-        var updateProduct = req.body;
-        var id = req.params.id;
-        data[id] = updateProduct // Spoof a DB call
-        res.json(updateProduct);
-    },
-
-    delete: function(req, res) {
-        var id = req.params.id;
-        data.splice(id, 1) // Spoof a DB call
-        res.json(true);
     }
 };
 
