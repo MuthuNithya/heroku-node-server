@@ -116,7 +116,7 @@
                 var _removeQueue = [];
                 Q.all(_saveQueue).then(function(data){
                     if(data.length === 2){
-                        if(data[0].nModified === 1 && data[1]){
+                        if(data[0].result && data[0].result.nModified === 1 && data[1]){
                             res.status(200);
                             res.json({
                                 "status": 200,
