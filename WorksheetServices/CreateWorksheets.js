@@ -138,16 +138,24 @@
                             });
                         }
                     }else if(data.length === 1){
-                        if(_saveWorkData){
-                            _removeQueue.push(_saveWorkData.collection.remove({userid: workDataObj.userid, version: workDataObj.version, workDate: workDataObj.workDate}, {justOne: true}));
-                        }
-                        Q.all(_removeQueue).then(function(data){
-                            res.status(401);
-                            res.json({
-                                "status": 401,
-                                "message": "Data Save Error"
+                        if(!(matchedWorkSheetInstance.version < workDataObj.version) && matchedWorkSheetInstance.version !== workDataObj.version){
+                            if(_saveWorkData){
+                                _removeQueue.push(_saveWorkData.collection.remove({userid: workDataObj.userid, version: workDataObj.version, workDate: workDataObj.workDate}, {justOne: true}));
+                            }
+                            Q.all(_removeQueue).then(function(data){
+                                res.status(401);
+                                res.json({
+                                    "status": 401,
+                                    "message": "Data Save Error"
+                                });
                             });
-                        });
+                        }else{
+                            res.status(200);
+                            res.json({
+                                "status": 200,
+                                "message": "Data Saved Successfully"
+                            });
+                        }
                     }else{
                         res.status(401);
                         res.json({
